@@ -13,15 +13,16 @@ namespace WebApiProducto.Services
     class ServiceProducto : IProductos
     {
         private readonly HttpClient client;
-        public ServiceProducto(HttpClient client_)
+        private readonly ILogger<ServiceProducto> logger;
+
+        public ServiceProducto(HttpClient client_, ILogger<ServiceProducto> _logger)
         {
             this.client = client_;
+            this.logger = _logger;
         }
         public async Task<List<Producto>> GetProductos()
         {
             List<Producto> lsProductos = new();
-            var timer = new System.Timers.Timer(200000);
-            timer.Start();
             
             try
             {
@@ -33,7 +34,7 @@ namespace WebApiProducto.Services
             }
             catch (Exception ex)
             {
-                
+                logger.LogInformation("{Message}", ex.Message);
             }
             return lsProductos;
 

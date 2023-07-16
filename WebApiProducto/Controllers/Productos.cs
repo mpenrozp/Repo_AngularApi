@@ -1,4 +1,5 @@
 using System.Globalization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApiProducto.Models;
 using WebApiProducto.Services;
@@ -7,6 +8,7 @@ namespace WebApiProducto.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class Productos : ControllerBase
     {
 
@@ -18,13 +20,14 @@ namespace WebApiProducto.Controllers
             this.iproductos = iproductos_;
             this.logger =_logger;
         }
-        [HttpGet]
+        [HttpGet("AllProductos")]
         public async Task<IActionResult>  GetProductos()
         {
             List<Producto> lsProductos;
             //Producto oProd = new Producto(){ Id= 1, Price = 2000, Title = "Titulo", Images = new string[100] };
+            logger.LogInformation("consultando productos...");
             Task<List<Producto>> lsProducto = iproductos.GetProductos();
-             logger.LogInformation("ejecutando metodos sincronos");
+            logger.LogInformation("ejecutando metodos sincronos...");
 
              lsProductos = await lsProducto;
 

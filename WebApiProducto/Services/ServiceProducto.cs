@@ -14,7 +14,7 @@ namespace WebApiProducto.Services
     {
         private readonly HttpClient client;
         private readonly ILogger<ServiceProducto> logger;
-
+    
         public ServiceProducto(HttpClient client_, ILogger<ServiceProducto> _logger)
         {
             this.client = client_;
@@ -28,9 +28,7 @@ namespace WebApiProducto.Services
             {
                 HttpResponseMessage response = await this.client.GetAsync("https://api.escuelajs.co/api/v1/products");
                 lsProductos = await response.Content.ReadAsAsync<List<Producto>>();
-
-                // RestApi = wcAPI.UploadString(wsUrl, "POST", jsonSerializer);
-                //lsProductos = JsonConvert.DeserializeObject<ResponseOKServiceProvider>(responseBody);
+                //Thread.Sleep(20000);
             }
             catch (Exception ex)
             {

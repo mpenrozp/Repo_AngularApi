@@ -12,6 +12,14 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.9" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.17.0" />
+
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.9" /> 
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" /> 
+    
+    
+
   </ItemGroup>
 
 </Project>

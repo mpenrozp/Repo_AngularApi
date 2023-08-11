@@ -33,7 +33,7 @@ namespace WebApiProducto.Services
                         configuration["Jwt:Issuer"],
                         configuration["Jwt:Audience"],
                         claims,
-                        expires: DateTime.Now.AddMinutes(1),
+                        expires: DateTime.Now.AddMinutes(10),
                         signingCredentials: credentials
             );
 

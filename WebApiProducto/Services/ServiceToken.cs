@@ -1,3 +1,4 @@
+using System.Globalization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace WebApiProducto.Services
         }
         public string GenerateToken(string UserName, string Password)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]!));
             var credentials = new SigningCredentials(securityKey,SecurityAlgorithms.HmacSha256);
             
             var claims = new []{

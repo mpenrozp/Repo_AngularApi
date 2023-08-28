@@ -23,16 +23,25 @@ namespace WebApiProducto.Controllers
             this.configuration = _configuration;
         }
         [HttpPost()]
-        public IActionResult Login(AutorizacionRequest autorizacion)
+        public IResult Login(AutorizacionRequest autorizacion)
         {
+            var validator = new UserValidator();
+
+            var result = validator.Validate(autorizacion);
+            if (!result.IsValid)
+            {
+                 return Results.ValidationProblem(result.ToDictionary());
+            }
             var tokenresp = itoken.GenerateToken(autorizacion.UserName, autorizacion.Password);
 
-           AutorizacionRequest autorizacionRequest = new (){
-            UserName = autorizacion.UserName, Password = autorizacion.Password,
-            Token = tokenresp
-           };
-            
-            return Ok(autorizacionRequest);
+            AutorizacionRequest autorizacionRequest = new()
+            {
+                UserName = autorizacion.UserName,
+                Password = autorizacion.Password,
+                Token = tokenresp
+            };
+
+            return Results.Ok(autorizacionRequest);
         }
     }
 }

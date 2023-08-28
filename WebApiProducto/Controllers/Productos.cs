@@ -21,7 +21,7 @@ namespace WebApiProducto.Controllers
             this.logger =_logger;
         }
         [HttpGet("AllProductos")]
-        public async Task<IActionResult>  GetProductos()
+        public async Task<IResult>  GetProductos()
         {
             List<Producto> lsProductos;
             //Producto oProd = new Producto(){ Id= 1, Price = 2000, Title = "Titulo", Images = new string[100] };
@@ -32,7 +32,7 @@ namespace WebApiProducto.Controllers
              lsProductos = await lsProducto;
 
              logger.LogInformation("terminó la consulta de productos");
-             return Ok(lsProductos);
+             return Results.Ok(lsProductos);
         } 
     }
 }

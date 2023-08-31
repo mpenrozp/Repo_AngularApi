@@ -6,9 +6,11 @@ using System.Text;
 using WebApiProducto.Services;
 using WebApiProducto.Interfaces;
 using Microsoft.AspNetCore.HttpLogging;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
-
+builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
+// Add services to the container.
 
 
 builder.Services.AddControllers();
@@ -40,28 +42,26 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IProductos, ServiceProducto>();
 builder.Services.AddScoped<IToken, ServiceToken>();
 builder.Services.AddHttpClient();
-
-
-builder.Logging.ClearProviders();
-builder.Logging.AddConsole();
-builder.Services.AddHttpLogging(logging =>
+/*builder.Services.AddHttpLogging(logging =>
 {
     logging.LoggingFields = HttpLoggingFields.All;
-});
+});*/
+
+//builder.Logging.AddConsole();
+
 var app = builder.Build();
 
-app.UseHttpLogging();
+//app.UseHttpLogging();
+app.UseSerilogRequestLogging();
 
 app.UseCors( options => 
     options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-    
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

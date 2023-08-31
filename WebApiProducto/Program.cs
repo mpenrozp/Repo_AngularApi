@@ -7,6 +7,7 @@ using WebApiProducto.Services;
 using WebApiProducto.Interfaces;
 using Microsoft.AspNetCore.HttpLogging;
 using Serilog;
+using Serilog.Events;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
@@ -34,7 +35,12 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuerSigningKey = true
     };
 });
-
+/*var logg = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.Console(LogEventLevel.Information)
+                .CreateLogger();
+                
+*/
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -42,17 +48,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IProductos, ServiceProducto>();
 builder.Services.AddScoped<IToken, ServiceToken>();
 builder.Services.AddHttpClient();
-/*builder.Services.AddHttpLogging(logging =>
-{
-    logging.LoggingFields = HttpLoggingFields.All;
-});*/
 
-//builder.Logging.AddConsole();
 
 var app = builder.Build();
 
-//app.UseHttpLogging();
-app.UseSerilogRequestLogging();
 
 app.UseCors( options => 
     options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
@@ -67,5 +66,9 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.UseSerilogRequestLogging();
+/*var itemNumber = 1;
+var itemCount = 100;
+Log.Warning("Processing item {ItemNumber} of {ItemCount}", itemNumber, itemCount);
+*/
 app.Run();

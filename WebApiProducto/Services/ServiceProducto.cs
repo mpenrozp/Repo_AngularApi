@@ -6,6 +6,7 @@ using WebApiProducto.Models;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Text.Json.Serialization;
+using Serilog;
 
 namespace WebApiProducto.Services
 {
@@ -25,9 +26,8 @@ namespace WebApiProducto.Services
         public async Task<List<Producto>> GetProductos()
         {
             List<Producto> lsProductos = new();
-         
-            try
-            {
+
+            
                 HttpResponseMessage response = await this.client.GetAsync(configuration["urlGetImages"]);
                 // lsProductos = await response.Content.ReadAsAsync<List<Producto>>();
                 if (response.IsSuccessStatusCode)
@@ -37,11 +37,7 @@ namespace WebApiProducto.Services
                 }
 
                 // Thread.Sleep(20000);
-            }
-            catch (Exception ex)
-            {
-                logger.LogInformation("{Message}", ex.Message);
-            }
+            
             return lsProductos!;
 
 

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
+using Serilog.Core;
 using WebApiProducto.Interfaces;
 using WebApiProducto.Models;
 
@@ -25,23 +27,33 @@ namespace WebApiProducto.Controllers
         [HttpPost()]
         public IResult Login(AutorizacionRequest autorizacion)
         {
+            logger.LogInformation("{@autorizacion}", autorizacion);
             var validator = new UserValidator();
-
-            var result = validator.Validate(autorizacion);
-            if (!result.IsValid)
+            try
             {
-                 return Results.ValidationProblem(result.ToDictionary());
+                var result = validator.Validate(autorizacion);
+                if (!result.IsValid)
+                {
+                    return Results.ValidationProblem(result.ToDictionary());
+                }
+                var tokenresp = itoken.GenerateToken(autorizacion.UserName, autorizacion.Password);
+
+                AutorizacionRequest autorizacionRequest = new()
+                {
+                    UserName = autorizacion.UserName,
+                    Password = autorizacion.Password,
+                    Token = tokenresp
+                };
+                logger.LogInformation("{@autorizacionRequest}", autorizacionRequest);
+                return Results.Ok(autorizacionRequest);
             }
-            var tokenresp = itoken.GenerateToken(autorizacion.UserName, autorizacion.Password);
-
-            AutorizacionRequest autorizacionRequest = new()
+            catch (Exception ex)
             {
-                UserName = autorizacion.UserName,
-                Password = autorizacion.Password,
-                Token = tokenresp
-            };
-
-            return Results.Ok(autorizacionRequest);
+                logger.LogError(ex, " Error: {Message}, {StackTrace} ", ex.Message, ex.StackTrace);
+                return Results.NoContent();
+            }
+            
+                
         }
     }
 }

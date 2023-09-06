@@ -8,10 +8,13 @@ using WebApiProducto.Interfaces;
 using Microsoft.AspNetCore.HttpLogging;
 using Serilog;
 using Serilog.Events;
+using Serilog.Context;
+using Microsoft.VisualBasic;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration).Enrich.WithProperty("ApplicationNameaaaa", "my application"));
+builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration).Enrich.WithProperty("ApplicationName", "WebApiProducto"));
 // Add services to the container.
+
 
 
 builder.Services.AddControllers();

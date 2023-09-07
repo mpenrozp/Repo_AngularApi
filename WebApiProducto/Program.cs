@@ -10,6 +10,7 @@ using Serilog;
 using Serilog.Events;
 using Serilog.Context;
 using Microsoft.VisualBasic;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration).Enrich.WithProperty("ApplicationName", "WebApiProducto"));
@@ -72,9 +73,12 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseMiddleware<SerilogRequestLogger>();
 app.UseSerilogRequestLogging();
 /*var itemNumber = 1;
 var itemCount = 100;
 Log.Warning("Processing item {ItemNumber} of {ItemCount}", itemNumber, itemCount);
 */
+
 app.Run();

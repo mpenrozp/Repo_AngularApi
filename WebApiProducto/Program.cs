@@ -60,7 +60,7 @@ builder.Services.AddHttpClient();
 var app = builder.Build();
 
 
-app.UseCors( options => 
+app.UseCors(options =>
     options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -74,7 +74,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseMiddleware<SerilogRequestLogger>();
+app.UseMiddleware<RequestResponseLoggingMiddleware>();
 app.UseSerilogRequestLogging();
 /*var itemNumber = 1;
 var itemCount = 100;

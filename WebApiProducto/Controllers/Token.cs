@@ -27,7 +27,7 @@ namespace WebApiProducto.Controllers
         [HttpPost()]
         public IResult Login(AutorizacionRequest autorizacion)
         {
-            logger.LogInformation("{@autorizacion}", autorizacion);
+            //logger.LogInformation("{@autorizacion}", autorizacion);
             var validator = new UserValidator();
             try
             {
@@ -44,7 +44,7 @@ namespace WebApiProducto.Controllers
                     Password = autorizacion.Password,
                     Token = tokenresp
                 };
-                logger.LogInformation("{@autorizacionRequest}", autorizacionRequest);
+
                 return Results.Ok(autorizacionRequest);
             }
             catch (Exception ex)

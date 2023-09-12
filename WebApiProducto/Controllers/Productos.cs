@@ -8,7 +8,7 @@ namespace WebApiProducto.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-
+    [Authorize]
     public class Productos : ControllerBase
     {
 
@@ -38,8 +38,8 @@ namespace WebApiProducto.Controllers
             }
             catch (Exception ex)
             {
-                logger.LogError(ex," Error: {Message}, {StackTrace} ", ex.Message, ex.StackTrace);
-                return Results.NoContent();
+                logger.LogError(ex, " Error: {Message}, {StackTrace} ", ex.Message, ex.StackTrace);
+                return Results.Problem(ex.Message, null, null, ErrorDescription.NoControlado);
             }
 
         }

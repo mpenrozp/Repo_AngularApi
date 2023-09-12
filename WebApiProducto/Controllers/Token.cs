@@ -34,7 +34,7 @@ namespace WebApiProducto.Controllers
                 var result = validator.Validate(autorizacion);
                 if (!result.IsValid)
                 {
-                    return Results.ValidationProblem(result.ToDictionary());
+                    return Results.ValidationProblem(result.ToDictionary(), null, null,null, ErrorDescription.Validacion);
                 }
                 var tokenresp = itoken.GenerateToken(autorizacion.UserName, autorizacion.Password);
 
@@ -49,11 +49,11 @@ namespace WebApiProducto.Controllers
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, " Error: {Message}, {StackTrace} ", ex.Message, ex.StackTrace);
-                return Results.NoContent();
+                logger.LogError(ex, " Error: {Message}, {StackTrace} " , ex.Message, ex.StackTrace);
+                return Results.Problem(ex.Message, null, null, ErrorDescription.NoControlado);
             }
-            
-                
+
+
         }
     }
 }

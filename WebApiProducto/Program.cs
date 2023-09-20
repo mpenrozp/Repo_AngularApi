@@ -11,13 +11,12 @@ using Serilog.Events;
 using Serilog.Context;
 using Microsoft.VisualBasic;
 using System.Text.Json;
+using Google.Protobuf.WellKnownTypes;
 
 var builder = WebApplication.CreateBuilder(args);
+
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration).Enrich.WithProperty("ApplicationName", "WebApiProducto"));
 // Add services to the container.
-
-
-
 builder.Services.AddControllers();
 builder.Services.AddAuthentication(options =>
 {
@@ -54,11 +53,16 @@ builder.Services.AddSwaggerGen();
 // Add services to the container.
 builder.Services.AddScoped<IProductos, ServiceProducto>();
 builder.Services.AddScoped<IToken, ServiceToken>();
-builder.Services.AddHttpClient();
+//builder.Services.AddHttpClient();
+builder.Services.AddHttpClient("GetImagenes", httpClient =>
+{
+    httpClient.BaseAddress = new Uri("https://api.escuelajs.co/");
+    httpClient.Timeout = TimeSpan.FromSeconds(1);
+    // ...
+});
 
 
 var app = builder.Build();
-
 
 app.UseCors(options =>
     options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
@@ -80,5 +84,4 @@ app.UseSerilogRequestLogging();
 var itemCount = 100;
 Log.Warning("Processing item {ItemNumber} of {ItemCount}", itemNumber, itemCount);
 */
-
 app.Run();

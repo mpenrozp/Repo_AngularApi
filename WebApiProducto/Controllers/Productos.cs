@@ -8,7 +8,7 @@ namespace WebApiProducto.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize]
+
     public class Productos : ControllerBase
     {
 
@@ -28,7 +28,7 @@ namespace WebApiProducto.Controllers
             {
                 //Producto oProd = new Producto(){ Id= 1, Price = 2000, Title = "Titulo", Images = new string[100] };
                 logger.LogInformation("consultando productos...");
-                Task<List<Producto>> lsProducto = iproductos.GetProductos();
+                Task<List<Producto>> lsProducto =   iproductos.GetProductos();
                 logger.LogInformation("ejecutando metodos sincronos...");
 
                 lsProductos = await lsProducto;
@@ -36,11 +36,17 @@ namespace WebApiProducto.Controllers
                 logger.LogInformation("terminó la consulta de productos");
                 return Results.Ok(lsProductos);
             }
+            catch (TaskCanceledException tex)
+            {
+                logger.LogError(tex, " Error: {Message}, {StackTrace} ", tex.Message, tex.StackTrace);
+                return Results.Problem(tex.Message, null, StatusCodes.Status504GatewayTimeout, ErrorDescription.NoControlado);
+            }
             catch (Exception ex)
             {
                 logger.LogError(ex, " Error: {Message}, {StackTrace} ", ex.Message, ex.StackTrace);
                 return Results.Problem(ex.Message, null, null, ErrorDescription.NoControlado);
             }
+
 
         }
     }

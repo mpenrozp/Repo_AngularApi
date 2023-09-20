@@ -27,6 +27,7 @@ namespace WebApiProducto.Controllers
         [HttpPost()]
         public IResult Login(AutorizacionRequest autorizacion)
         {
+            //Thread.Sleep(20000);
             //logger.LogInformation("{@autorizacion}", autorizacion);
             var validator = new UserValidator();
             try
@@ -34,7 +35,7 @@ namespace WebApiProducto.Controllers
                 var result = validator.Validate(autorizacion);
                 if (!result.IsValid)
                 {
-                    return Results.ValidationProblem(result.ToDictionary(), null, null,null, ErrorDescription.Validacion);
+                    return Results.ValidationProblem(result.ToDictionary(), null, null, null, ErrorDescription.Validacion);
                 }
                 var tokenresp = itoken.GenerateToken(autorizacion.UserName, autorizacion.Password);
 
@@ -49,7 +50,7 @@ namespace WebApiProducto.Controllers
             }
             catch (Exception ex)
             {
-                logger.LogError(ex, " Error: {Message}, {StackTrace} " , ex.Message, ex.StackTrace);
+                logger.LogError(ex, " Error: {Message}, {StackTrace} ", ex.Message, ex.StackTrace);
                 return Results.Problem(ex.Message, null, null, ErrorDescription.NoControlado);
             }
 

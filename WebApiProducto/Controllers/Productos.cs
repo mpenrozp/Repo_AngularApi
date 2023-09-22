@@ -28,7 +28,7 @@ namespace WebApiProducto.Controllers
             {
                 //Producto oProd = new Producto(){ Id= 1, Price = 2000, Title = "Titulo", Images = new string[100] };
                 logger.LogInformation("consultando productos...");
-                Task<List<Producto>> lsProducto =   iproductos.GetProductos();
+                Task<List<Producto>> lsProducto = iproductos.GetProductos();
                 logger.LogInformation("ejecutando metodos sincronos...");
 
                 lsProductos = await lsProducto;
@@ -36,10 +36,15 @@ namespace WebApiProducto.Controllers
                 logger.LogInformation("terminó la consulta de productos");
                 return Results.Ok(lsProductos);
             }
-            catch (TaskCanceledException tex)
+            catch (HttpRequestException tex)
             {
                 logger.LogError(tex, " Error: {Message}, {StackTrace} ", tex.Message, tex.StackTrace);
-                return Results.Problem(tex.Message, null, StatusCodes.Status504GatewayTimeout, ErrorDescription.NoControlado);
+                return Results.Problem(tex.Message, null, tex.StatusCode.HasValue ? (int)tex.StatusCode! : StatusCodes.Status500InternalServerError, ErrorDescription.NoControlado);
+            }
+            catch (TaskCanceledException tex2)
+            {
+                logger.LogError(tex2, " Error: {Message}, {StackTrace} ", tex2.Message, tex2.StackTrace);
+                return Results.Problem(tex2.Message, null, StatusCodes.Status504GatewayTimeout, ErrorDescription.NoControlado);
             }
             catch (Exception ex)
             {

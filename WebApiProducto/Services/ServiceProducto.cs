@@ -33,7 +33,7 @@ namespace WebApiProducto.Services
             var httpClient = client.CreateClient("GetImagenes");
             //this.client.Timeout = TimeSpan.FromSeconds(1);
             HttpResponseMessage response = await httpClient.GetAsync("api/v1/products");//configuration["urlGetImages"]"
-
+            response.EnsureSuccessStatusCode();
             // lsProductos = await response.Content.ReadAsAsync<List<Producto>>();
             if (response.IsSuccessStatusCode)
             {

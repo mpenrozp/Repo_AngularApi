@@ -57,7 +57,7 @@ builder.Services.AddScoped<IToken, ServiceToken>();
 builder.Services.AddHttpClient("GetImagenes", httpClient =>
 {
     httpClient.BaseAddress = new Uri("https://api.escuelajs.co/");
-    httpClient.Timeout = TimeSpan.FromSeconds(1);
+    httpClient.Timeout = TimeSpan.FromSeconds(5);
     // ...
 });
 

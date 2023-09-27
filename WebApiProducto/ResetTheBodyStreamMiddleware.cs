@@ -1,89 +1,11 @@
+using System.Net.Mime;
 using System.Text;
+using System.Text.Json;
 using Serilog;
 using Serilog.Context;
-
-public class SerilogRequestLogger
-{
-    readonly RequestDelegate _next;
-
-    public SerilogRequestLogger(RequestDelegate next)
-    {
-        if (next == null) throw new ArgumentNullException(nameof(next));
-        _next = next;
-    }
-
-    public async Task Invoke(HttpContext httpContext)
-    {
-        if (httpContext == null) throw new ArgumentNullException(nameof(httpContext));
-
-        // Push the user name into the log context so that it is included in all log entries
-        // LogContext.PushProperty("UserName", httpContext.User.Identity.Name);
-
-        // Getting the request body is a little tricky because it's a stream
-        // So, we need to read the stream and then rewind it back to the beginning
-        string requestBody = "";
-        HttpRequestRewindExtensions.EnableBuffering(httpContext.Request);
-        Stream body = httpContext.Request.Body;
-        byte[] buffer = new byte[Convert.ToInt32(httpContext.Request.ContentLength)];
-        await httpContext.Request.Body.ReadAsync(buffer, 0, buffer.Length);
-        requestBody = Encoding.UTF8.GetString(buffer);
-        body.Seek(0, SeekOrigin.Begin);
-        httpContext.Request.Body = body;
-
-        /*Log.ForContext("RequestHeaders", httpContext.Request.Headers.ToDictionary(h => h.Key, h => h.Value.ToString()), destructureObjects: true)
-           .ForContext("RequestBody", requestBody)
-           .Debug("Request information {RequestMethod} {RequestPath} information", httpContext.Request.Method, httpContext.Request.Path);
-        */
-
-        Log.Information("{RequestMethod} {RequestPath} {@requestBody} ", httpContext.Request.Method, httpContext.Request.Path, requestBody);
-        // The reponse body is also a stream so we need to:
-        // - hold a reference to the original response body stream
-        // - re-point the response body to a new memory stream
-        // - read the response body after the request is handled into our memory stream
-        // - copy the response in the memory stream out to the original response stream
-        using (var responseBodyMemoryStream = new MemoryStream())
-        {
-            var originalResponseBodyReference = httpContext.Response.Body;
-            httpContext.Response.Body = responseBodyMemoryStream;
-
-            await _next(httpContext);
-
-            httpContext.Response.Body.Seek(0, SeekOrigin.Begin);
-            var responseBody = await new StreamReader(httpContext.Response.Body).ReadToEndAsync();
-            httpContext.Response.Body.Seek(0, SeekOrigin.Begin);
-            /*
-                        Log.ForContext("RequestBody", requestBody)
-                           .ForContext("ResponseBody", responseBody)
-                           .Debug("Response information {RequestMethod} {RequestPath} {statusCode}", httpContext.Request.Method, httpContext.Request.Path, httpContext.Response.StatusCode);
-            */
-            Log.Information("{RequestMethod} {RequestPath} {@responseBody} {status}", httpContext.Request.Method, httpContext.Request.Path, responseBody, httpContext.Response.StatusCode);
-            await responseBodyMemoryStream.CopyToAsync(originalResponseBodyReference);
-        }
-    }
-}
-public class ResetTheBodyStreamMiddleware
-{
-    private readonly RequestDelegate _next;
-
-    public ResetTheBodyStreamMiddleware(RequestDelegate next)
-    {
-        _next = next;
-    }
-
-    public async Task InvokeAsync(HttpContext context)
-    {
-        // Still enable buffering before anything reads
-        context.Request.EnableBuffering();
-
-        // Call the next delegate/middleware in the pipeline
-        await _next(context);
-
-        // Reset the request body stream position to the start so we can read it
-        context.Request.Body.Position = 0;
+using WebApiProducto.Models;
 
 
-    }
-}
 public class RequestResponseLoggingMiddleware
 {
     private readonly RequestDelegate _next;
@@ -155,5 +77,62 @@ public class RequestResponseLoggingMiddleware
 
         //Return the string for the response, including the status code (e.g. 200, 404, 401, etc.)
         return $"Response: {response.StatusCode}: {text}";
+    }
+}
+public class GlobalExceptionMiddleware
+{
+    private readonly RequestDelegate _next;
+    private readonly ILogger<GlobalExceptionMiddleware> logger;
+
+    public GlobalExceptionMiddleware(RequestDelegate next, ILogger<GlobalExceptionMiddleware> _logger)
+    {
+        _next = next;
+        logger = _logger;
+    }
+
+    public async Task Invoke(HttpContext context)
+    {
+
+        try
+        {
+            await _next(context);
+        }
+        catch (Exception ex)
+        {
+            await HandleExceptionAsync(context, ex);
+        }
+    }
+    private async Task HandleExceptionAsync(HttpContext context, Exception exception)
+    {
+
+        ResponseDetails response = new();
+        context.Response.ContentType = MediaTypeNames.Application.Json;
+        switch (exception)
+        {
+            case HttpRequestException ex:
+                logger.LogError(ex, " Error: {Message}, {StackTrace} ", ex.Message, ex.StackTrace);
+                response.details = ex.Message;
+                response.status = ex.StatusCode.HasValue ? (int)ex.StatusCode! : StatusCodes.Status500InternalServerError;
+                response.title = ErrorDescription.NoControlado;
+                context.Response.StatusCode = ex.StatusCode.HasValue ? (int)ex.StatusCode! : StatusCodes.Status500InternalServerError;
+                break;
+            case TaskCanceledException ex:
+                logger.LogError(ex, " Error: {Message}, {StackTrace} ", ex.Message, ex.StackTrace);
+                response.details = ex.Message;
+                response.status = StatusCodes.Status504GatewayTimeout;
+                response.title = ErrorDescription.NoControlado;
+                context.Response.StatusCode = StatusCodes.Status504GatewayTimeout;
+                break;
+            case Exception ex:
+                logger.LogError(ex, " Error: {Message}, {StackTrace} ", ex.Message, ex.StackTrace);
+                response.details = ex.Message;
+                response.status = StatusCodes.Status500InternalServerError;
+                response.title = ErrorDescription.NoControlado;
+                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                break;
+
+        }
+        await context.Response.WriteAsync(response.ToString());
+
     }
 }

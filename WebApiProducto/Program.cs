@@ -79,6 +79,10 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.UseMiddleware<RequestResponseLoggingMiddleware>();
+app.UseMiddleware<GlobalExceptionMiddleware>();
+
+
+
 app.UseSerilogRequestLogging();
 /*var itemNumber = 1;
 var itemCount = 100;

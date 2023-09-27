@@ -30,31 +30,21 @@ namespace WebApiProducto.Controllers
             //Thread.Sleep(20000);
             //logger.LogInformation("{@autorizacion}", autorizacion);
             var validator = new UserValidator();
-            try
+            var result = validator.Validate(autorizacion);
+            if (!result.IsValid)
             {
-                var result = validator.Validate(autorizacion);
-                if (!result.IsValid)
-                {
-                    return Results.ValidationProblem(result.ToDictionary(), null, null, null, ErrorDescription.Validacion);
-                }
-                var tokenresp = itoken.GenerateToken(autorizacion.UserName, autorizacion.Password);
-
-                AutorizacionRequest autorizacionRequest = new()
-                {
-                    UserName = autorizacion.UserName,
-                    Password = autorizacion.Password,
-                    Token = tokenresp
-                };
-
-                return Results.Ok(autorizacionRequest);
+                return Results.ValidationProblem(result.ToDictionary(), null, null, null, ErrorDescription.Validacion);
             }
-            catch (Exception ex)
+            var tokenresp = itoken.GenerateToken(autorizacion.UserName, autorizacion.Password);
+
+            AutorizacionRequest autorizacionRequest = new()
             {
-                logger.LogError(ex, " Error: {Message}, {StackTrace} ", ex.Message, ex.StackTrace);
-                return Results.Problem(ex.Message, null, null, ErrorDescription.NoControlado);
-            }
+                UserName = autorizacion.UserName,
+                Password = autorizacion.Password,
+                Token = tokenresp
+            };
 
-
+            return Results.Ok(autorizacionRequest);
         }
     }
 }

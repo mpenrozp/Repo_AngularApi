@@ -1,17 +1,12 @@
-using System.Security.AccessControl;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-
 using WebApiProducto.Services;
 using WebApiProducto.Interfaces;
-using Microsoft.AspNetCore.HttpLogging;
 using Serilog;
-using Serilog.Events;
-using Serilog.Context;
-using Microsoft.VisualBasic;
-using System.Text.Json;
-using Google.Protobuf.WellKnownTypes;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using WebApiProducto.Extensions;
+using WebApiProducto.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -48,8 +43,11 @@ builder.Services.AddAuthentication(options =>
  logg.Dispose();               
 */
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddEndpointsApiExplorer()
+    .AddCustomApiVersioning();
+
+
 // Add services to the container.
 builder.Services.AddScoped<IProductos, ServiceProducto>();
 builder.Services.AddScoped<IToken, ServiceToken>();
@@ -66,11 +64,24 @@ var app = builder.Build();
 
 app.UseCors(options =>
     options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
+var apiVersionDescriptionProvider =
+    app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(config =>
+    {
+        // Allows multiple versions of our routes.
+        // .Reverse(), first shown most recent version.
+        foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions.Reverse())
+        {
+            config.SwaggerEndpoint(
+                url: $"/swagger/{description.GroupName}/swagger.json",
+                name: $"Web API Producto- {description.GroupName.ToUpper()}");
+        }
+    });
 }
 app.UseHttpsRedirection();
 
@@ -80,12 +91,5 @@ app.MapControllers();
 
 app.UseMiddleware<RequestResponseLoggingMiddleware>();
 app.UseMiddleware<GlobalExceptionMiddleware>();
-
-
-
 app.UseSerilogRequestLogging();
-/*var itemNumber = 1;
-var itemCount = 100;
-Log.Warning("Processing item {ItemNumber} of {ItemCount}", itemNumber, itemCount);
-*/
 app.Run();

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
@@ -11,20 +12,25 @@ using WebApiProducto.Models;
 namespace WebApiProducto.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Produces("application/json")]
+    [ApiVersion("1.0")]
+    [ApiVersion("2.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class Token : ControllerBase
     {
-        private readonly IToken itoken;
-        private readonly ILogger<Token> logger;
-        private readonly IConfiguration configuration;
-        public Token(IToken _itoken, ILogger<Token> _logger, IConfiguration _configuration)
+        private readonly IToken _itoken;
+        private readonly ILogger<Token> _logger;
+        private readonly IConfiguration _configuration;
+        public Token(IToken itoken, ILogger<Token> logger, IConfiguration configuration)
         {
 
-            this.itoken = _itoken;
-            this.logger = _logger;
-            this.configuration = _configuration;
+            this._itoken = itoken;
+            this._logger = logger;
+            this._configuration = configuration;
         }
-        [HttpPost()]
+
+        [HttpPost("Login")]
+        [MapToApiVersion("1.0")]
         public IResult Login(AutorizacionRequest autorizacion)
         {
             //Thread.Sleep(20000);
@@ -35,7 +41,7 @@ namespace WebApiProducto.Controllers
             {
                 return Results.ValidationProblem(result.ToDictionary(), null, null, null, ErrorDescription.Validacion);
             }
-            var tokenresp = itoken.GenerateToken(autorizacion.UserName, autorizacion.Password);
+            var tokenresp = _itoken.GenerateToken(autorizacion.UserName, autorizacion.Password);
 
             AutorizacionRequest autorizacionRequest = new()
             {
@@ -46,5 +52,12 @@ namespace WebApiProducto.Controllers
 
             return Results.Ok(autorizacionRequest);
         }
+        [HttpPost("Login")]
+        [MapToApiVersion("2.0")]
+        public IResult Login_v2(AutorizacionRequest autorizacion)
+        {
+            throw new HttpRequestException("Método no implementado en esta versión", new Exception(), HttpStatusCode.NotImplemented);
+        }
+
     }
 }

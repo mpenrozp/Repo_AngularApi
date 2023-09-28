@@ -13,26 +13,26 @@ namespace WebApiProducto.Services
 
     class ServiceProducto : IProductos
     {
-        private readonly IHttpClientFactory client;
-        private readonly HttpClient client2;
-        private readonly ILogger<ServiceProducto> logger;
-        private readonly IConfiguration configuration;
+        private readonly IHttpClientFactory _client;
+        private readonly HttpClient _client2;
+        private readonly ILogger<ServiceProducto> _logger;
+        private readonly IConfiguration _configuration;
 
-        public ServiceProducto(IHttpClientFactory  client_, HttpClient client_2, ILogger<ServiceProducto> _logger, IConfiguration _configuration)
+        public ServiceProducto(IHttpClientFactory  client, HttpClient client2, ILogger<ServiceProducto> logger, IConfiguration configuration)
         {
-            this.client = client_;
-            this.logger = _logger;
-            this.configuration = _configuration;
-            this.client2 = client_2;
+            this._client = client;
+            this._logger = logger;
+            this._client2 = client2;
+            this._configuration = configuration;
             //this.client.BaseAddress = new Uri("https://api.escuelajs.co/");
             //this.client.Timeout = TimeSpan.FromSeconds(1);
         }
         public async Task<List<Producto>> GetProductos()
         {
             List<Producto> lsProductos = new();
-            var httpClient = client.CreateClient("GetImagenes");
+            var httpClient = _client.CreateClient("GetImagenes");
             //this.client.Timeout = TimeSpan.FromSeconds(1);
-            HttpResponseMessage response = await httpClient.GetAsync("ap/v1/products");//configuration["urlGetImages"]"
+            HttpResponseMessage response = await httpClient.GetAsync("api/v1/products");//configuration["urlGetImages"]"
             response.EnsureSuccessStatusCode();
             // lsProductos = await response.Content.ReadAsAsync<List<Producto>>();
             if (response.IsSuccessStatusCode)
@@ -52,7 +52,7 @@ namespace WebApiProducto.Services
             List<Producto> lsProductos = new();
            //var httpClient = client.CreateClient("GetImagenes");
             //this.client.Timeout = TimeSpan.FromSeconds(1);
-            HttpResponseMessage response = await this.client2.GetAsync(configuration["urlGetImages"]);//configuration["urlGetImages"]"
+            HttpResponseMessage response = await this._client2.GetAsync(_configuration["urlGetImages"]);//configuration["urlGetImages"]"
 
             // lsProductos = await response.Content.ReadAsAsync<List<Producto>>();
             if (response.IsSuccessStatusCode)

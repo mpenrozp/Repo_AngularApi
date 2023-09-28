@@ -1,3 +1,4 @@
+using System;
 using System.Globalization;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -8,30 +9,29 @@ namespace WebApiProducto.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-
     public class Productos : ControllerBase
     {
 
         private readonly IProductos iproductos;
-        private readonly ILogger<Productos> logger;
-        public Productos(IProductos iproductos_, ILogger<Productos> _logger)
+        private readonly ILogger<Productos> _logger;
+        public Productos(IProductos iproductos_, ILogger<Productos> logger)
         {
 
             this.iproductos = iproductos_;
-            this.logger = _logger;
+            this._logger = logger;
         }
         [HttpGet("AllProductos")]
         public async Task<IResult> GetProductos()
         {
             List<Producto> lsProductos;
 
-            logger.LogInformation("consultando productos...");
+            _logger.LogInformation("consultando productos...");
             Task<List<Producto>> lsProducto = iproductos.GetProductos();
-            logger.LogInformation("ejecutando metodos sincronos...");
+            _logger.LogInformation("ejecutando metodos sincronos...");
 
             lsProductos = await lsProducto;
 
-            logger.LogInformation("terminó la consulta de productos");
+            _logger.LogInformation("terminó la consulta de productos");
             return Results.Ok(lsProductos);
 
         }

@@ -19,9 +19,9 @@ namespace WebApiProducto.Extensions
                 // Allows API return versions in the response header (api-supported-versions).
                 options.ReportApiVersions = true;
                 // Allows to choose whether they would like to place the parameter in the URL or in the request header
-                options.ApiVersionReader = ApiVersionReader.Combine(
+                //options.ApiVersionReader = ApiVersionReader.Combine(
                     //new UrlSegmentApiVersionReader(),
-                    new HeaderApiVersionReader("x-api-version"));
+                //    new HeaderApiVersionReader("x-api-version"));
                 //new MediaTypeApiVersionReader("x-api-version"));
                 options.ErrorResponses = new ApiVersioningErrorResponseProvider();
             });

@@ -1,14 +1,17 @@
 using System;
 using System.Globalization;
+using System.Net;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebApiProducto.Models;
 using WebApiProducto.Services;
 
-namespace WebApiProducto.Controllers
+namespace WebApiProducto.Controllers.V2
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Produces("application/json")]
+    [ApiVersion("2.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class Productos : ControllerBase
     {
 
@@ -21,19 +24,12 @@ namespace WebApiProducto.Controllers
             this._logger = logger;
         }
         [HttpGet("AllProductos")]
-        public async Task<IResult> GetProductos()
+        [MapToApiVersion("2.0")]
+        public IResult GetProductos()
         {
-            List<Producto> lsProductos;
-
-            _logger.LogInformation("consultando productos...");
-            Task<List<Producto>> lsProducto = iproductos.GetProductos();
-            _logger.LogInformation("ejecutando metodos sincronos...");
-
-            lsProductos = await lsProducto;
-
-            _logger.LogInformation("terminó la consulta de productos");
-            return Results.Ok(lsProductos);
+             throw new HttpRequestException("Método no implementado en esta versión", new Exception(), HttpStatusCode.NotImplemented);
 
         }
+
     }
 }

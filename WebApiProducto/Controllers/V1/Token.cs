@@ -9,12 +9,11 @@ using Serilog.Core;
 using WebApiProducto.Interfaces;
 using WebApiProducto.Models;
 
-namespace WebApiProducto.Controllers
+namespace WebApiProducto.Controllers.V1
 {
     [ApiController]
     [Produces("application/json")]
     [ApiVersion("1.0")]
-    [ApiVersion("2.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class Token : ControllerBase
     {
@@ -30,7 +29,6 @@ namespace WebApiProducto.Controllers
         }
 
         [HttpPost("Login")]
-        [MapToApiVersion("1.0")]
         public IResult Login(AutorizacionRequest autorizacion)
         {
             //Thread.Sleep(20000);
@@ -51,12 +49,6 @@ namespace WebApiProducto.Controllers
             };
 
             return Results.Ok(autorizacionRequest);
-        }
-        [HttpPost("Login")]
-        [MapToApiVersion("2.0")]
-        public IResult Login_v2(AutorizacionRequest autorizacion)
-        {
-            throw new HttpRequestException("Método no implementado en esta versión", new Exception(), HttpStatusCode.NotImplemented);
         }
 
     }

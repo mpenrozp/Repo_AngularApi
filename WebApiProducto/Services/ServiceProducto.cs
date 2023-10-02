@@ -24,8 +24,8 @@ namespace WebApiProducto.Services
             this._logger = logger;
             this._client2 = client2;
             this._configuration = configuration;
-            //this.client.BaseAddress = new Uri("https://api.escuelajs.co/");
-            //this.client.Timeout = TimeSpan.FromSeconds(1);
+            this._client2.BaseAddress = new Uri("https://api.escuelajs.co/");
+            this._client2.Timeout = TimeSpan.FromSeconds(1);
         }
         public async Task<List<Producto>> GetProductos()
         {
@@ -50,8 +50,6 @@ namespace WebApiProducto.Services
         public async Task<List<Producto>> GetProductos2()
         {
             List<Producto> lsProductos = new();
-           //var httpClient = client.CreateClient("GetImagenes");
-            //this.client.Timeout = TimeSpan.FromSeconds(1);
             HttpResponseMessage response = await this._client2.GetAsync(_configuration["urlGetImages"]);//configuration["urlGetImages"]"
 
             // lsProductos = await response.Content.ReadAsAsync<List<Producto>>();
@@ -62,7 +60,6 @@ namespace WebApiProducto.Services
             }
 
             // Thread.Sleep(20000);
-
             return lsProductos!;
 
 

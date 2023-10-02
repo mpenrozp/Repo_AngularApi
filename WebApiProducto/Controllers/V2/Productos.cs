@@ -25,11 +25,21 @@ namespace WebApiProducto.Controllers.V2
         }
         [HttpGet("AllProductos")]
         [MapToApiVersion("2.0")]
-        public IResult GetProductos()
+       public async Task<IResult> GetProductos()
         {
-             throw new HttpRequestException("Método no implementado en esta versión", new Exception(), HttpStatusCode.NotImplemented);
+            List<Producto> lsProductos;
+
+            _logger.LogInformation("consultando productos...");
+            Task<List<Producto>> lsProducto = iproductos.GetProductos2();
+            _logger.LogInformation("ejecutando metodos sincronos...");
+
+            lsProductos = await lsProducto;
+
+            _logger.LogInformation("terminó la consulta de productos");
+            return Results.Ok(lsProductos);
 
         }
+        
 
     }
 }

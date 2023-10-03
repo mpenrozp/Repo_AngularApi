@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
@@ -12,7 +13,7 @@ using WebApiProducto.Models;
 namespace WebApiProducto.Controllers.V1
 {
     [ApiController]
-    [Produces("application/json")]
+    [Produces(MediaTypeNames.Application.Json)]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class Token : ControllerBase
@@ -29,6 +30,8 @@ namespace WebApiProducto.Controllers.V1
         }
 
         [HttpPost("Login")]
+        [ProducesResponseType(typeof(AutorizacionRequest), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseDetails), StatusCodes.Status500InternalServerError)]
         public IResult Login(AutorizacionRequest autorizacion)
         {
             //Thread.Sleep(20000);

@@ -47,6 +47,7 @@ namespace WebApiProducto.Extensions
             {
                 Title = Assembly.GetExecutingAssembly().GetName().Name,
                 Version = description.ApiVersion.ToString(),
+                Description = "Esta web api está diseñada para crear y obtener productos"
             };
 
             if (description.IsDeprecated)

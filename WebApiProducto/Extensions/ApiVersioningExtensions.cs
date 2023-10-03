@@ -35,9 +35,6 @@ namespace WebApiProducto.Extensions
 
             services.AddSwaggerGen(config =>
             {
-                Log.Information("prueba:" + Path.Combine(AppContext.BaseDirectory,
-                    $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
-
                 config.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory,
                     $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"), true);
                 config.OperationFilter<SwaggerDefaultValuesFilter>();

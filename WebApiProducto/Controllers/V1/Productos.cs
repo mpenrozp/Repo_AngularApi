@@ -1,15 +1,18 @@
 using System;
 using System.Globalization;
 using System.Net;
+using System.Net.Mime;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Formatters;
 using WebApiProducto.Models;
 using WebApiProducto.Services;
 
 namespace WebApiProducto.Controllers.V1
 {
+    /// <summary>Este controlador gestiona el CRUD de todos los productos</summary>
     [ApiController]
-    [Produces("application/json")]
+    [Produces(MediaTypeNames.Application.Json)]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class Productos : ControllerBase
@@ -24,7 +27,10 @@ namespace WebApiProducto.Controllers.V1
             this._logger = logger;
         }
         [HttpGet("AllProductos")]
-        public async Task<IResult> GetProductos()
+        // [ApiExplorerSettings(IgnoreApi = true)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseDetails), StatusCodes.Status500InternalServerError)]
+        public async Task<ActionResult<List<Producto>>> GetProductos()
         {
             List<Producto> lsProductos;
 
@@ -35,10 +41,10 @@ namespace WebApiProducto.Controllers.V1
             lsProductos = await lsProducto;
 
             _logger.LogInformation("terminó la consulta de productos");
-            return Results.Ok(lsProductos);
+            return Ok(lsProductos);
 
         }
-        
+
 
     }
 }

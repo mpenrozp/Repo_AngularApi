@@ -28,10 +28,13 @@ namespace WebApiProducto.Controllers.V1
             this._logger = logger;
             this._configuration = configuration;
         }
-
+        /// <response code="200">OK. Devuelve el usuario y token valido para consumir los servicios de esta api.</response>        
+        /// <response code="500">InternalServerError. Error interno del servidor.</response>
+        /// <response code="400">BadRequest. Error de validación en los datos del request.</response>
         [HttpPost("Login")]
         [ProducesResponseType(typeof(AutorizacionRequest), StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(ResponseDetails), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status400BadRequest)]
         public IResult Login(AutorizacionRequest autorizacion)
         {
             //Thread.Sleep(20000);

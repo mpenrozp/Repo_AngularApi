@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using WebApiProducto.Extensions;
 using WebApiProducto.Filters;
 
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Host.UseSerilog((context, configuration) => configuration.ReadFrom.Configuration(context.Configuration).Enrich.WithProperty("ApplicationName", "WebApiProducto"));
@@ -47,7 +49,6 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddEndpointsApiExplorer()
     .AddCustomApiVersioning();
 
-
 // Add services to the container.
 builder.Services.AddScoped<IProductos, ServiceProducto>();
 builder.Services.AddScoped<IToken, ServiceToken>();
@@ -55,10 +56,9 @@ builder.Services.AddScoped<IToken, ServiceToken>();
 builder.Services.AddHttpClient("GetImagenes", httpClient =>
 {
     httpClient.BaseAddress = new Uri("https://api.escuelajs.co/");
-    httpClient.Timeout = TimeSpan.FromSeconds(5);
+    httpClient.Timeout = TimeSpan.FromSeconds(1);
     // ...
 });
-
 
 var app = builder.Build();
 

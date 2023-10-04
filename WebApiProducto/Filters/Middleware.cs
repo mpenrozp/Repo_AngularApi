@@ -106,29 +106,29 @@ namespace WebApiProducto.Filters
         private async Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
 
-            ResponseDetails response = new();
+            ResponseDetailsError response = new();
             context.Response.ContentType = MediaTypeNames.Application.Json;
             switch (exception)
             {
-                case HttpRequestException ex:
+               /*case HttpRequestException ex:
                     logger.LogError(ex, " Error: {Message}, {StackTrace} ", ex.Message, ex.StackTrace);
                     response.details = ex.Message;
                     response.status = ex.StatusCode.HasValue ? (int)ex.StatusCode! : StatusCodes.Status500InternalServerError;
                     response.title = ErrorDescription.NoControlado;
                     context.Response.StatusCode = ex.StatusCode.HasValue ? (int)ex.StatusCode! : StatusCodes.Status500InternalServerError;
-                    break;
+                    break;*/
                 case TaskCanceledException ex:
                     logger.LogError(ex, " Error: {Message}, {StackTrace} ", ex.Message, ex.StackTrace);
-                    response.details = ex.Message;
-                    response.status = StatusCodes.Status504GatewayTimeout;
-                    response.title = ErrorDescription.NoControlado;
+                    response.Detail = ex.Message;
+                    response.Status = StatusCodes.Status504GatewayTimeout;
+                    response.Title = ErrorDescription.NoControlado;
                     context.Response.StatusCode = StatusCodes.Status504GatewayTimeout;
                     break;
                 case Exception ex:
                     logger.LogError(ex, " Error: {Message}, {StackTrace} ", ex.Message, ex.StackTrace);
-                    response.details = ex.Message;
-                    response.status = StatusCodes.Status500InternalServerError;
-                    response.title = ErrorDescription.NoControlado;
+                    response.Detail = ex.Message;
+                    response.Status = StatusCodes.Status500InternalServerError;
+                    response.Title = ErrorDescription.NoControlado;
                     context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                     break;
 

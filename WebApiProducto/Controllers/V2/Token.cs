@@ -37,7 +37,7 @@ namespace WebApiProducto.Controllers.V2
         [ProducesResponseType(typeof(AutorizacionRequest), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status400BadRequest)]
-       // [SwaggerRequestExample(typeof(AutorizacionRequest), typeof(AutorizacionRequestExample))]
+        [SwaggerRequestExample(typeof(AutorizacionRequest), typeof(AutorizacionRequestExample))]
         public IResult Login(AutorizacionRequest autorizacion)
         {
             //Thread.Sleep(20000);

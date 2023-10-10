@@ -16,7 +16,8 @@ namespace WebApiProducto.Examples
             new AutorizacionRequest()
             {
                 UserName = "admin",
-                Password = "admin"
+                Password = "admin",
+
             });
 
         }

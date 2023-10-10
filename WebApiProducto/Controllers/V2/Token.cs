@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
 using Serilog.Core;
+using Swashbuckle.AspNetCore.Filters;
+using WebApiProducto.Examples;
 using WebApiProducto.Interfaces;
 using WebApiProducto.Models;
 
@@ -28,12 +30,34 @@ namespace WebApiProducto.Controllers.V2
             this._logger = logger;
             this._configuration = configuration;
         }
-        /// <response code="501">NotImplemented. Funcionalidad para obtener Token no ha sido implementada en esta versión de api.</response>
+        /// <response code="200">OK. Devuelve el usuario y token valido para consumir los servicios de esta api.</response>        
+        /// <response code="500">InternalServerError. Error interno del servidor.</response>
+        /// <response code="400">BadRequest. Error de validación en los datos del request.</response>
         [HttpPost("Login")]
-        [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status501NotImplemented)]
+        [ProducesResponseType(typeof(AutorizacionRequest), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status400BadRequest)]
+       // [SwaggerRequestExample(typeof(AutorizacionRequest), typeof(AutorizacionRequestExample))]
         public IResult Login(AutorizacionRequest autorizacion)
         {
-            throw new HttpRequestException("Método no implementado en esta versión", new Exception(), HttpStatusCode.NotImplemented);
+            //Thread.Sleep(20000);
+            //logger.LogInformation("{@autorizacion}", autorizacion);
+            var validator = new UserValidator();
+            var result = validator.Validate(autorizacion);
+            if (!result.IsValid)
+            {
+                return Results.ValidationProblem(result.ToDictionary(), "Parametros del request inválidos", null, null, ErrorDescription.Validacion);
+            }
+            var tokenresp = _itoken.GenerateToken(autorizacion.UserName, autorizacion.Password);
+
+            AutorizacionRequest autorizacionRequest = new()
+            {
+                UserName = autorizacion.UserName,
+                Password = autorizacion.Password,
+                Token = tokenresp
+            };
+
+            return Results.Ok(autorizacionRequest);
         }
 
     }

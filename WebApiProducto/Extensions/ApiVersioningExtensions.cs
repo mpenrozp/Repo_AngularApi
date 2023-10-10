@@ -3,8 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.Extensions.Options;
 using Serilog;
+using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using WebApiProducto.Examples;
 using WebApiProducto.Filters;
+using WebApiProducto.Models;
 
 namespace WebApiProducto.Extensions
 {
@@ -38,8 +41,11 @@ namespace WebApiProducto.Extensions
                 config.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory,
                     $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"), true);
                 config.OperationFilter<SwaggerDefaultValuesFilter>();
+                config.ExampleFilters();
             });
-
+            //services.AddSwaggerExamples();
+            services.AddSwaggerExamplesFromAssemblyOf<ProductoResponseExample>();
+            services.AddSwaggerExamplesFromAssemblyOf<AutorizacionRequestExample>();
             services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 
             return services;

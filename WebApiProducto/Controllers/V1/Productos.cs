@@ -5,18 +5,18 @@ using System.Net.Mime;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Swashbuckle.AspNetCore.Filters;
+using WebApiProducto.Examples;
 using WebApiProducto.Models;
 using WebApiProducto.Services;
 
 namespace WebApiProducto.Controllers.V1
 {
     /// <summary>Este controlador gestiona el CRUD de todos los productos</summary>
-    /// <response code="401">Unauthorized. No se ha indicado o es incorrecto el Token JWT de acceso.</response>  
     [ApiController]
     [Produces(MediaTypeNames.Application.Json)]
     [ApiVersion("1.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
-    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     public class Productos : ControllerBase
     {
 

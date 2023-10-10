@@ -107,16 +107,24 @@ namespace WebApiProducto.Filters
         {
 
             ResponseDetailsError response = new();
+            response.Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.1";
             context.Response.ContentType = MediaTypeNames.Application.Json;
             switch (exception)
             {
-               /*case HttpRequestException ex:
+                /*case HttpRequestException ex:
+                     logger.LogError(ex, " Error: {Message}, {StackTrace} ", ex.Message, ex.StackTrace);
+                     response.details = ex.Message;
+                     response.status = ex.StatusCode.HasValue ? (int)ex.StatusCode! : StatusCodes.Status500InternalServerError;
+                     response.title = ErrorDescription.NoControlado;
+                     context.Response.StatusCode = ex.StatusCode.HasValue ? (int)ex.StatusCode! : StatusCodes.Status500InternalServerError;
+                     break;*/
+                case NotImplementedException ex:
                     logger.LogError(ex, " Error: {Message}, {StackTrace} ", ex.Message, ex.StackTrace);
-                    response.details = ex.Message;
-                    response.status = ex.StatusCode.HasValue ? (int)ex.StatusCode! : StatusCodes.Status500InternalServerError;
-                    response.title = ErrorDescription.NoControlado;
-                    context.Response.StatusCode = ex.StatusCode.HasValue ? (int)ex.StatusCode! : StatusCodes.Status500InternalServerError;
-                    break;*/
+                    response.Detail = ex.Message;
+                    response.Status = StatusCodes.Status501NotImplemented;
+                    response.Title = ErrorDescription.NoControlado;
+                    context.Response.StatusCode = StatusCodes.Status501NotImplemented;
+                    break;
                 case TaskCanceledException ex:
                     logger.LogError(ex, " Error: {Message}, {StackTrace} ", ex.Message, ex.StackTrace);
                     response.Detail = ex.Message;
@@ -131,6 +139,7 @@ namespace WebApiProducto.Filters
                     response.Title = ErrorDescription.NoControlado;
                     context.Response.StatusCode = StatusCodes.Status500InternalServerError;
                     break;
+
 
             }
             await context.Response.WriteAsync(response.ToString());

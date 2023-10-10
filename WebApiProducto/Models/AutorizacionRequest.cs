@@ -7,7 +7,7 @@ using FluentValidation;
 namespace WebApiProducto.Models
 {
     public class AutorizacionRequest
-    {
+    {   
         public string UserName { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
         public string Token { get; set; } = string.Empty;
@@ -24,7 +24,7 @@ namespace WebApiProducto.Models
     {
         public UserValidatorUserName()
         {
-            RuleFor(user => user.UserName).Cascade(CascadeMode.Stop)
+            RuleFor(user => user.UserName)
                                           .NotEmpty().WithMessage("Debe indicar el nombre del usuario")
                                           .Length(2, 5).WithMessage("{PropertyName} tiene {TotalLength} letras. Debe tener una longitud entre {MinLength} y {MaxLength} letras.");
         }

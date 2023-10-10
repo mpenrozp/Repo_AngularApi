@@ -45,7 +45,7 @@ builder.Services.AddAuthentication(options =>
  logg.Dispose();               
 */
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen();
 builder.Services.AddEndpointsApiExplorer()
     .AddCustomApiVersioning();
 

@@ -4,15 +4,19 @@ using System.Net;
 using System.Net.Mime;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Filters;
+using WebApiProducto.Examples;
 using WebApiProducto.Models;
 using WebApiProducto.Services;
 
 namespace WebApiProducto.Controllers.V2
 {
+    /// <response code="401">Unauthorized. Usuario no autorizado para acceder a la api.</response>
     [ApiController]
     [Produces(MediaTypeNames.Application.Json)]
     [ApiVersion("2.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
+    [Authorize]
     public class Productos : ControllerBase
     {
 

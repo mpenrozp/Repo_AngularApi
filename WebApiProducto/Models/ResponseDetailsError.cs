@@ -1,3 +1,4 @@
+using System.Globalization;
 using System.Runtime.Intrinsics.Arm;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,7 @@ namespace WebApiProducto.Models
     }
     public class ResponseDetailsError : ProblemDetails
     {
+        public Dictionary<string, string[]>? errors { get; set; }
         public override string ToString()
         {
             return JsonSerializer.Serialize(this);

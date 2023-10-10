@@ -27,13 +27,14 @@ namespace WebApiProducto.Services
             this._client2.BaseAddress = new Uri("https://api.escuelajs.co/");
             this._client2.Timeout = TimeSpan.FromSeconds(1);
         }
-        public async Task<List<Producto>> GetProductos()
+        public async Task<List<Producto>> GetProductosAsync()
         {
             List<Producto> lsProductos = new();
             var httpClient = _client.CreateClient("GetImagenes");
             //this.client.Timeout = TimeSpan.FromSeconds(1);
             HttpResponseMessage response = await httpClient.GetAsync("api/v1/products");//configuration["urlGetImages"]"
             response.EnsureSuccessStatusCode();
+             Log.Information("envia solicitud asyn");
             // lsProductos = await response.Content.ReadAsAsync<List<Producto>>();
             if (response.IsSuccessStatusCode)
             {
@@ -41,17 +42,17 @@ namespace WebApiProducto.Services
                 lsProductos = JsonConvert.DeserializeObject<List<Producto>>(resp)!;
             }
 
-            // Thread.Sleep(20000);
-
+            Thread.Sleep(20000);
+            Log.Information("retorna resp asyn");
             return lsProductos!;
 
 
         }
-        public async Task<List<Producto>> GetProductos2()
+        public async Task<List<Producto>> GetProductosAsync2()
         {
             List<Producto> lsProductos = new();
             HttpResponseMessage response = await this._client2.GetAsync(_configuration["urlGetImages"]);//configuration["urlGetImages"]"
-
+            Log.Information("envia solicitud asyn");
             // lsProductos = await response.Content.ReadAsAsync<List<Producto>>();
             if (response.IsSuccessStatusCode)
             {
@@ -60,6 +61,7 @@ namespace WebApiProducto.Services
             }
 
             // Thread.Sleep(20000);
+            Log.Information("retorna resp asyn");
             return lsProductos!;
 
 

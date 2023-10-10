@@ -40,12 +40,12 @@ namespace WebApiProducto.Controllers.V1
         [ProducesResponseType(typeof(List<Producto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status504GatewayTimeout)]
-        public async Task<IResult> GetProductos()
+        public async Task<IResult> GetProductosAsync()
         {
             List<Producto> lsProductos;
 
             _logger.LogInformation("consultando productos...");
-            Task<List<Producto>> lsProducto = iproductos.GetProductos();
+            Task<List<Producto>> lsProducto = iproductos.GetProductosAsync();
             _logger.LogInformation("ejecutando metodos sincronos...");
 
             lsProductos = await lsProducto;

@@ -8,7 +8,7 @@ namespace WebApiProducto.Services
 {
     public interface IProductos
     {
-        Task<List<Producto>> GetProductos();
-        Task<List<Producto>> GetProductos2();
+        Task<List<Producto>> GetProductosAsync();
+        Task<List<Producto>> GetProductosAsync2();
     }
 }

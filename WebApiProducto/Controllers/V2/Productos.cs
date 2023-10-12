@@ -55,7 +55,11 @@ namespace WebApiProducto.Controllers.V2
             return Results.Ok(lsProductos);
 
         }
-
+        [HttpPost("AddProducto")]
+        public async Task<Producto> AddProductoAsync(Producto producto)
+        {
+            throw new NotImplementedException();
+        }
 
     }
 }

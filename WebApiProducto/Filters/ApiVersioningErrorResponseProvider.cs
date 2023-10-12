@@ -18,13 +18,13 @@ namespace WebApiProducto.Filters
             errorResponse.Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.1";
             switch (context.StatusCode)
             {
-                case 501:
+                /*case 501:
                     errorResponse.Detail = "Esta funcionalidad no está soportada para esta versión de api";
                     errorResponse.Title = ErrorDescription.NoControlado;
                     errorResponse.Status = context.StatusCode;
-                    break;
+                    break;*/
                 default:
-                    errorResponse.Detail = context.MessageDetail;
+                    errorResponse.Detail = context.Message;
                     errorResponse.Title = ErrorDescription.NoControlado;
                     errorResponse.Status = context.StatusCode;
                     break;

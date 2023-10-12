@@ -55,9 +55,46 @@ namespace WebApiProducto.Controllers.V2
             return Results.Ok(lsProductos);
 
         }
+        /// <summary>Esta acción agrega un nuevo producto</summary>
+        /// <remarks>
+        /// Devuelve el mismo producto agregado
+        /// </remarks>         
+        /// <response code="200">OK. Devuelve el mimso producto agregado.</response>        
+        /// <response code="500">InternalServerError. Error interno del servidor.</response>
         [HttpPost("AddProducto")]
+        [ProducesResponseType(typeof(Producto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status500InternalServerError)]
         public async Task<Producto> AddProductoAsync(Producto producto)
         {
+            await Task.Delay(1000);
+            throw new NotImplementedException();
+        }
+        /// <summary>Esta acción modifica un producto</summary>
+        /// <remarks>
+        /// Devuelve el mismo producto modificado
+        /// </remarks>         
+        /// <response code="200">OK. Devuelve el mismo producto modificado.</response>        
+        /// <response code="500">InternalServerError. Error interno del servidor.</response>
+        [HttpPut("UpdProducto")]
+        [ProducesResponseType(typeof(Producto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status500InternalServerError)]
+        public async Task<Producto> UpdProductoAsync(Producto producto)
+        {
+            await Task.Delay(1000);
+            throw new NotImplementedException();
+        }
+        /// <summary>Esta acción elimina un producto</summary>
+        /// <remarks>
+        /// Devuelve el producto eliminado
+        /// </remarks>         
+        /// <response code="200">OK. Devuelve el mismo producto eliminado.</response>        
+        /// <response code="500">InternalServerError. Error interno del servidor.</response>
+        [HttpDelete("DelProducto")]
+        [ProducesResponseType(typeof(Producto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status500InternalServerError)]
+        public async Task<Producto> DelProductoAsync(Producto producto)
+        {
+            await Task.Delay(1000);
             throw new NotImplementedException();
         }
 

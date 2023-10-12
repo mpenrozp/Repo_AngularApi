@@ -1,3 +1,5 @@
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
 using System;
 using System.Globalization;
 using System.Net;
@@ -43,14 +45,13 @@ namespace WebApiProducto.Controllers.V2
         public async Task<IResult> GetProductosAsync()
         {
             List<Producto> lsProductos;
-
+            string mensajetimer = string.Empty;
             _logger.LogInformation("consultando productos...");
-            Task<List<Producto>> lsProducto = iproductos.GetProductosAsync();
-            _logger.LogInformation("ejecutando metodos sincronos...");
+            Task<List<Producto>> lProductos = iproductos.GetProductosAsync();
+            Task<string> prueba = iproductos.TimerAsync();
 
-            lsProductos = await lsProducto;
-
-            _logger.LogInformation("terminó la consulta de productos");
+            lsProductos = await lProductos;
+            mensajetimer = await prueba;
             return Results.Ok(lsProductos);
 
         }

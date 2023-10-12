@@ -1,4 +1,6 @@
+using System;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -32,6 +34,22 @@ namespace WebApiProducto.Filters
 
                 parameter.Required |= description.IsRequired;
             }
+         /*   var actionDescriptor = context.ApiDescription.ActionDescriptor as ControllerActionDescriptor;
+
+            if (!string.Equals(actionDescriptor.ActionName, "Login", StringComparison.InvariantCultureIgnoreCase))
+            {
+                operation.Parameters.Add(new OpenApiParameter
+                {
+                    Name = "X-Authorization",
+                    In = ParameterLocation.Header,
+                    Description = "access token",
+					Required = true,
+					Schema = new OpenApiSchema {
+						Type = "string",
+						Default = new OpenApiString("Bearer {access token}"),
+					}
+                });
+            }*/
         }
     }
 }

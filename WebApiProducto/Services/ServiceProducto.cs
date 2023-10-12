@@ -31,10 +31,10 @@ namespace WebApiProducto.Services
         {
             List<Producto> lsProductos = new();
             var httpClient = _client.CreateClient("GetImagenes");
+             Log.Information("envia solicitud GetProductosAsync");
             //this.client.Timeout = TimeSpan.FromSeconds(1);
             HttpResponseMessage response = await httpClient.GetAsync("api/v1/products");//configuration["urlGetImages"]"
             response.EnsureSuccessStatusCode();
-             Log.Information("envia solicitud asyn");
             // lsProductos = await response.Content.ReadAsAsync<List<Producto>>();
             if (response.IsSuccessStatusCode)
             {
@@ -43,7 +43,7 @@ namespace WebApiProducto.Services
             }
 
             Thread.Sleep(20000);
-            Log.Information("retorna resp asyn");
+            Log.Information("ok consulta productos GetProductosAsync");
             return lsProductos!;
 
 
@@ -65,6 +65,13 @@ namespace WebApiProducto.Services
             return lsProductos!;
 
 
+        }
+        public async Task<string> TimerAsync()
+        {
+            _logger.LogInformation($"Consultando... TimerAsync");
+            await Task.Delay(20000);
+            _logger.LogInformation($"devuelve resultaod TimerAsync...");
+            return "prueba";
         }
     }
 }

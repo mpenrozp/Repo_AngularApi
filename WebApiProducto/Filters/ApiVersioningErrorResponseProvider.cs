@@ -14,17 +14,26 @@ namespace WebApiProducto.Filters
         public override IActionResult CreateResponse(ErrorResponseContext context)
         {
             //You can initialize your own class here. Below is just a sample.
-            ResponseDetailsError errorResponse = new()
+            ResponseDetailsError errorResponse = new();
+            errorResponse.Type = "https://datatracker.ietf.org/doc/html/rfc7231#section-6.1";
+            switch (context.StatusCode)
             {
-                Detail = "Esta funcionalidad no está soportada para esta versión de api",
-                Title = ErrorDescription.NoControlado,
-                Status = context.StatusCode
-            };
-
+                case 501:
+                    errorResponse.Detail = "Esta funcionalidad no está soportada para esta versión de api";
+                    errorResponse.Title = ErrorDescription.NoControlado;
+                    errorResponse.Status = context.StatusCode;
+                    break;
+                default:
+                    errorResponse.Detail = context.MessageDetail;
+                    errorResponse.Title = ErrorDescription.NoControlado;
+                    errorResponse.Status = context.StatusCode;
+                    break;
+            }
             var response = new ObjectResult(errorResponse);
             response.StatusCode = context.StatusCode;
 
             return response;
+
         }
     }
 }

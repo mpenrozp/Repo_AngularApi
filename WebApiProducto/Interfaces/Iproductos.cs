@@ -10,5 +10,6 @@ namespace WebApiProducto.Services
     {
         Task<List<Producto>> GetProductosAsync();
         Task<List<Producto>> GetProductosAsync2();
+        Task<string>  TimerAsync();
     }
 }

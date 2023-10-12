@@ -7,6 +7,9 @@ using Serilog;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using WebApiProducto.Extensions;
 using WebApiProducto.Filters;
+using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
+using FluentValidation.AspNetCore;
+using FluentValidation;
 
 
 
@@ -59,7 +62,10 @@ builder.Services.AddHttpClient("GetImagenes", httpClient =>
     httpClient.Timeout = TimeSpan.FromSeconds(5);
     // ...
 });
-
+// Add FV
+builder.Services.AddFluentValidationAutoValidation();
+// Add FV validators
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 var app = builder.Build();
 
 app.UseCors(options =>
@@ -82,7 +88,9 @@ if (app.Environment.IsDevelopment())
                 name: $"Web API Producto- {description.GroupName.ToUpper()}");
         }
     });
+
 }
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

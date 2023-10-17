@@ -40,7 +40,7 @@ namespace WebApiProducto.Examples
         {
             Dictionary<string, string[]> errores = new Dictionary<string, string[]>();
             string[] mensajes = { "El usuario no puede ser vacío" };
-            errores.Add("userName", mensajes);
+            errores.Add("UserName", mensajes);
 
             yield return SwaggerExample.Create("Example Error 1",
              new ResponseDetailsError()

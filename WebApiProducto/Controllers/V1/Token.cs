@@ -32,9 +32,9 @@ namespace WebApiProducto.Controllers.V1
             this._configuration = configuration;
         }
         /// <response code="501">NotImplemented. Funcionalidad para obtener Token no ha sido implementada en esta versión de api.</response>
-        [HttpPost("Login")]
+        [HttpPost("loginUser")]
         [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status501NotImplemented)]
-        public IResult Login(AutorizacionRequest autorizacion)
+        public IResult LoginUser(AutorizacionRequest autorizacion)
         {
            throw new NotImplementedException();
         }

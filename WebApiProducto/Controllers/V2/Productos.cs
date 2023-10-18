@@ -38,11 +38,11 @@ namespace WebApiProducto.Controllers.V2
         /// <response code="200">OK. Devuelve la lista de objetos solicitada.</response>        
         /// <response code="500">InternalServerError. Error interno del servidor.</response>
         /// <response code="504">GatewayTimeout. Tiempo de espera agotado para el servicio de consulta de productos.</response>
-        [HttpGet("AllProductos")]
+        [HttpGet("getAllProducts")]
         [ProducesResponseType(typeof(List<Producto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status504GatewayTimeout)]
-        public async Task<IResult> GetProductosAsync()
+        public async Task<IResult> GetAllProductsAsync()
         {
             List<Producto> lsProductos;
             string mensajetimer = string.Empty;
@@ -61,10 +61,10 @@ namespace WebApiProducto.Controllers.V2
         /// </remarks>         
         /// <response code="200">OK. Devuelve el mimso producto agregado.</response>        
         /// <response code="500">InternalServerError. Error interno del servidor.</response>
-        [HttpPost("AddProducto")]
+        [HttpPost("createNewProduct")]
         [ProducesResponseType(typeof(Producto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status500InternalServerError)]
-        public async Task<Producto> AddProductoAsync(Producto producto)
+        public async Task<Producto> CreateNewProductAsync(Producto producto)
         {
             await Task.Delay(1000);
             throw new NotImplementedException();
@@ -75,10 +75,10 @@ namespace WebApiProducto.Controllers.V2
         /// </remarks>         
         /// <response code="200">OK. Devuelve el mismo producto modificado.</response>        
         /// <response code="500">InternalServerError. Error interno del servidor.</response>
-        [HttpPut("UpdProducto")]
+        [HttpPut("updateProduct")]
         [ProducesResponseType(typeof(Producto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status500InternalServerError)]
-        public async Task<Producto> UpdProductoAsync(Producto producto)
+        public async Task<Producto> UpdateProductAsync(Producto producto)
         {
             await Task.Delay(1000);
             throw new NotImplementedException();
@@ -89,10 +89,10 @@ namespace WebApiProducto.Controllers.V2
         /// </remarks>         
         /// <response code="200">OK. Devuelve el mismo producto eliminado.</response>        
         /// <response code="500">InternalServerError. Error interno del servidor.</response>
-        [HttpDelete("DelProducto")]
+        [HttpDelete("deleteProduct")]
         [ProducesResponseType(typeof(Producto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status500InternalServerError)]
-        public async Task<Producto> DelProductoAsync(Producto producto)
+        public async Task<Producto> DeleteProductAsync(Producto producto)
         {
             await Task.Delay(1000);
             throw new NotImplementedException();

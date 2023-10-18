@@ -36,11 +36,11 @@ namespace WebApiProducto.Controllers.V1
         /// <response code="200">OK. Devuelve la lista de objetos solicitada.</response>        
         /// <response code="500">InternalServerError. Error interno del servidor.</response>
         /// <response code="504">GatewayTimeout. Tiempo de espera agotado para el servicio de consulta de productos.</response>
-        [HttpGet("AllProductos")]
+        [HttpGet("getAllProducts")]
         [ProducesResponseType(typeof(List<Producto>), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status500InternalServerError)]
         [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status504GatewayTimeout)]
-        public async Task<IResult> GetProductosAsync()
+        public async Task<IResult> GetAllProductsAsync()
         {
             List<Producto> lsProductos;
 

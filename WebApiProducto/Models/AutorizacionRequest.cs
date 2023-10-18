@@ -24,7 +24,7 @@ namespace WebApiProducto.Models
     {
         public UserValidatorUserName()
         {
-            RuleFor(user => user.UserName)
+            RuleFor(user => user.UserName).Cascade(CascadeMode.Stop)
                                           .NotEmpty().WithMessage("Debe indicar el nombre del usuario")
                                           .Length(2, 5).WithMessage("{PropertyName} tiene {TotalLength} letras. Debe tener una longitud entre {MinLength} y {MaxLength} letras.");
         }

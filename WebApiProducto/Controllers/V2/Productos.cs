@@ -10,6 +10,7 @@ using Swashbuckle.AspNetCore.Filters;
 using WebApiProducto.Examples;
 using WebApiProducto.Models;
 using WebApiProducto.Services;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace WebApiProducto.Controllers.V2
 {
@@ -54,6 +55,32 @@ namespace WebApiProducto.Controllers.V2
             mensajetimer = await prueba;
             return Results.Ok(lsProductos);
 
+        }
+        /// <summary>Esta acción devuelve un producto</summary>
+        /// <remarks>
+        /// Devuelve el producto solicitado.
+        /// </remarks>         
+        /// <response code="200">OK. Devuelve la lista de objetos solicitada.</response>        
+        /// <response code="500">InternalServerError. Error interno del servidor.</response>
+        /// <response code="504">GatewayTimeout. Tiempo de espera agotado para el servicio de consulta de productos.</response>
+        /// <response code="404">NotFound. Producto no encontrado.</response>
+        [HttpGet("{id}")]
+        [ProducesResponseType(typeof(Producto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status504GatewayTimeout)]
+        [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status404NotFound)]
+        public async Task<IResult> GetProductAsync(int id)
+        {
+            List<Producto> lsProductos;
+            Producto prod;
+            _logger.LogInformation("consultando productos...");
+            Task<List<Producto>> lProductos = iproductos.GetProductosAsync();
+
+            lsProductos = await lProductos;
+            prod = lsProductos.Where(a => a.Id == id).FirstOrDefault()!;
+            if (prod == null)
+                throw new HttpRequestException("Producto no encontrado!", new Exception(), HttpStatusCode.NotFound);
+            return Results.Ok(prod);
         }
         /// <summary>Esta acción agrega un nuevo producto</summary>
         /// <remarks>

@@ -52,6 +52,7 @@ namespace WebApiProducto.Services
         {
             List<Producto> lsProductos = new();
             HttpResponseMessage response = await this._client2.GetAsync(_configuration["urlGetImages"]);//configuration["urlGetImages"]"
+            response.EnsureSuccessStatusCode();
             Log.Information("envia solicitud asyn");
             // lsProductos = await response.Content.ReadAsAsync<List<Producto>>();
             if (response.IsSuccessStatusCode)

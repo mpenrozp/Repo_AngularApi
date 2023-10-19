@@ -112,13 +112,13 @@ namespace WebApiProducto.Filters
             context.Response.ContentType = MediaTypeNames.Application.Json;
             switch (exception)
             {
-                /*case HttpRequestException ex:
+                case HttpRequestException ex:
                      logger.LogError(ex, " Error: {Message}, {StackTrace} ", ex.Message, ex.StackTrace);
-                     response.details = ex.Message;
-                     response.status = ex.StatusCode.HasValue ? (int)ex.StatusCode! : StatusCodes.Status500InternalServerError;
-                     response.title = ErrorDescription.NoControlado;
-                     context.Response.StatusCode = ex.StatusCode.HasValue ? (int)ex.StatusCode! : StatusCodes.Status500InternalServerError;
-                     break;*/
+                     response.Detail = ex.Message;
+                     response.Status = (int)ex.StatusCode!;
+                     response.Title = ErrorDescription.NoControlado;
+                     context.Response.StatusCode = (int)ex.StatusCode!;
+                     break;
                 case NotImplementedException ex:
                     logger.LogError(ex, " Error: {Message}, {StackTrace} ", ex.Message, ex.StackTrace);
                     response.Detail = ex.Message;

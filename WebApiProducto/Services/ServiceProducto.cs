@@ -67,6 +67,7 @@ namespace WebApiProducto.Services
 
 
         }
+        
         public async Task<string> TimerAsync()
         {
             _logger.LogInformation($"Consultando... TimerAsync");

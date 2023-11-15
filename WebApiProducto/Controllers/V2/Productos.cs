@@ -10,7 +10,7 @@ using Swashbuckle.AspNetCore.Filters;
 using WebApiProducto.Examples;
 using WebApiProducto.Models;
 using WebApiProducto.Services;
-using Microsoft.AspNetCore.Http.HttpResults;
+
 
 namespace WebApiProducto.Controllers.V2
 {
@@ -19,7 +19,7 @@ namespace WebApiProducto.Controllers.V2
     [Produces(MediaTypeNames.Application.Json)]
     [ApiVersion("2.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
-    [Authorize]
+   // [Authorize]
     public class Productos : ControllerBase
     {
 

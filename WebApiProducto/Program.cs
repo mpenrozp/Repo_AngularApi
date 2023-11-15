@@ -10,6 +10,10 @@ using WebApiProducto.Filters;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
 using FluentValidation.AspNetCore;
 using FluentValidation;
+using WebApiProducto.Data;
+using Microsoft.EntityFrameworkCore;
+using AutoMapper;
+using System.Text.Json.Serialization;
 
 
 
@@ -66,6 +70,15 @@ builder.Services.AddHttpClient("GetImagenes", httpClient =>
 builder.Services.AddFluentValidationAutoValidation();
 // Add FV validators
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+
+builder.Services.AddDbContext<ApplicationDbContext>(opciones => 
+    opciones.UseSqlServer("name=DefaultConnection"));
+
+    
+builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddControllers().AddJsonOptions(opciones => 
+    opciones.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+    
 var app = builder.Build();
 
 app.UseCors(options =>

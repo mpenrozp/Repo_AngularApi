@@ -80,6 +80,33 @@ namespace WebApiProducto.Controllers.V2
             await _Context.SaveChangesAsync();
             return Ok();
         }
+        [HttpDelete("{id:int}/moderna")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            var filasAlteradas = await _Context.Generos.Where(g => g.Id == id).ExecuteDeleteAsync();
+
+            if (filasAlteradas == 0)
+            {
+                return NotFound();
+            }
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id:int}/anterior")]
+        public async Task<ActionResult> DeleteAnterior(int id)
+        {
+            var genero = await _Context.Generos.FirstOrDefaultAsync(g => g.Id == id);
+
+            if (genero is null)
+            {
+                return NotFound();
+            }
+
+            _Context.Remove(genero);
+            await _Context.SaveChangesAsync();
+            return NoContent();
+        }
 
     }
 }

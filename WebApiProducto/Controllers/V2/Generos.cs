@@ -37,13 +37,22 @@ namespace WebApiProducto.Controllers.V2
         }
         [HttpPost]
         [ProducesResponseType(typeof(GeneroCreacionDTO), StatusCodes.Status200OK)]
-        public async Task<ActionResult> Post(GeneroCreacionDTO generoCreacionDTO)
+         [HttpPost]
+        public async Task<ActionResult> Post(GeneroCreacionDTO generoCreacion)
         {
-            var genero1 = _imapper.Map<Genero>(generoCreacionDTO);
 
-            _Context.Add(genero1);
+            var yaExisteGeneroConEsteNombre = await _Context.Generos.AnyAsync(g =>
+            g.Nombre == generoCreacion.Nombre);
+
+            if (yaExisteGeneroConEsteNombre)
+            {
+                return BadRequest("Ya existe un género con el nombre " + generoCreacion.Nombre);
+            }
+
+            var genero = _imapper.Map<Genero>(generoCreacion);
+            _Context.Add(genero);
             await _Context.SaveChangesAsync();
-            return Ok(generoCreacionDTO);
+            return Ok();
         }
         [HttpPost("varios")]
         [ProducesResponseType(typeof(GeneroCreacionDTO[]), StatusCodes.Status200OK)]

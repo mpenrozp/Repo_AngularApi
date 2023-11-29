@@ -12,7 +12,6 @@ using WebApiProducto.Entidades;
 namespace WebApiProducto.Controllers.V2
 {
     [ApiController]
-    [Produces(MediaTypeNames.Application.Json)]
     [ApiVersion("2.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class ComentariosController : ControllerBase

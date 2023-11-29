@@ -77,7 +77,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(opciones =>
     
 builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddControllers().AddJsonOptions(opciones => 
-    opciones.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+    opciones.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles)
+    .AddXmlDataContractSerializerFormatters();
     
 var app = builder.Build();
 

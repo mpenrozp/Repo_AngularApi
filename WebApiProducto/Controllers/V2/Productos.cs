@@ -16,7 +16,6 @@ namespace WebApiProducto.Controllers.V2
 {
     /// <response code="401">Unauthorized. Usuario no autorizado para acceder a la api.</response>
     [ApiController]
-    [Produces(MediaTypeNames.Application.Json)]
     [ApiVersion("2.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
    // [Authorize]

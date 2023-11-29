@@ -11,11 +11,12 @@ using WebApiProducto.Entidades;
 using WebApiProducto.DTOs;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using System.Xml.Serialization;
+using Swashbuckle.AspNetCore.Filters;
 
 namespace WebApiProducto.Controllers.V2
 {
     [ApiController]
-    [Produces(MediaTypeNames.Application.Json)]
     [ApiVersion("2.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class Generos : ControllerBase
@@ -31,13 +32,13 @@ namespace WebApiProducto.Controllers.V2
             this._logger = logger;
         }
         [HttpGet]
+        [SwaggerResponseExample(StatusCodes.Status200OK, typeof( List<Genero>))]
         public async Task<ActionResult<IEnumerable<Genero>>> Get()
         {
             return await _Context.Generos.ToListAsync();
         }
         [HttpPost]
         [ProducesResponseType(typeof(GeneroCreacionDTO), StatusCodes.Status200OK)]
-         [HttpPost]
         public async Task<ActionResult> Post(GeneroCreacionDTO generoCreacion)
         {
 
@@ -56,6 +57,7 @@ namespace WebApiProducto.Controllers.V2
         }
         [HttpPost("varios")]
         [ProducesResponseType(typeof(GeneroCreacionDTO[]), StatusCodes.Status200OK)]
+        
         public async Task<ActionResult> Post(GeneroCreacionDTO[] generoCreacionDTO)
         {
             var genero1 = _imapper.Map<Genero[]>(generoCreacionDTO);

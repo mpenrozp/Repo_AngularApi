@@ -88,8 +88,8 @@ app.UseCors(options =>
 var apiVersionDescriptionProvider =
     app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     
     app.UseSwagger();
     app.UseSwaggerUI(config =>
@@ -104,7 +104,7 @@ if (app.Environment.IsDevelopment())
         }
     });
 
-}
+//}
 
 app.UseHttpsRedirection();
 

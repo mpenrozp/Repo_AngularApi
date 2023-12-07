@@ -27,15 +27,14 @@ namespace WebApiProducto.Controllers.V2
         private readonly IProductos iproductos;
         private readonly ILogger<Productos> _logger;
         private readonly IServiceBus iServicesBus;
-        private readonly ISubscriptionReceiver _subscriptionReceiver;
 
-        public Productos(IProductos iproductos_, ILogger<Productos> logger, IServiceBus _iServicesBus, ISubscriptionReceiver subscriptionReceive)
+
+        public Productos(IProductos iproductos_, ILogger<Productos> logger, IServiceBus _iServicesBus)
         {
 
             this.iproductos = iproductos_;
             this._logger = logger;
             this.iServicesBus = _iServicesBus;
-            this._subscriptionReceiver = subscriptionReceive;
         }
         // [ApiExplorerSettings(IgnoreApi = true)]   
         /// <summary>Esta acción devuelve todos los productos</summary>
@@ -102,12 +101,6 @@ namespace WebApiProducto.Controllers.V2
              await iServicesBus.SendMessageAsync(producto.Title, producto.Price);
              return Results.Ok();
             
-        }
-        [HttpGet("GetProductMesagge")]
-        public async Task<IResult> GetProductMesaggeAsync()
-        {
-            await _subscriptionReceiver.ProcessMessagesAsync();
-            return Results.Ok("Mensaje leido correctamente");
         }
         /// <summary>Esta acción modifica un producto</summary>
         /// <remarks>

@@ -59,6 +59,7 @@ builder.Services.AddEndpointsApiExplorer()
 // Add services to the container.
 builder.Services.AddScoped<IProductos, ServiceProducto>();
 builder.Services.AddScoped<IToken, ServiceToken>();
+builder.Services.AddTransient<IServiceBus, ServiceBus>();
 //builder.Services.AddHttpClient();
 builder.Services.AddHttpClient("GetImagenes", httpClient =>
 {

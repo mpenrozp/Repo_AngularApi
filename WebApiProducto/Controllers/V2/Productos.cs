@@ -10,6 +10,8 @@ using Swashbuckle.AspNetCore.Filters;
 using WebApiProducto.Examples;
 using WebApiProducto.Models;
 using WebApiProducto.Services;
+using WebApiProducto.Data;
+
 
 
 namespace WebApiProducto.Controllers.V2
@@ -24,11 +26,16 @@ namespace WebApiProducto.Controllers.V2
 
         private readonly IProductos iproductos;
         private readonly ILogger<Productos> _logger;
-        public Productos(IProductos iproductos_, ILogger<Productos> logger)
+        private readonly IServiceBus iServicesBus;
+        private readonly ISubscriptionReceiver _subscriptionReceiver;
+
+        public Productos(IProductos iproductos_, ILogger<Productos> logger, IServiceBus _iServicesBus, ISubscriptionReceiver subscriptionReceive)
         {
 
             this.iproductos = iproductos_;
             this._logger = logger;
+            this.iServicesBus = _iServicesBus;
+            this._subscriptionReceiver = subscriptionReceive;
         }
         // [ApiExplorerSettings(IgnoreApi = true)]   
         /// <summary>Esta acción devuelve todos los productos</summary>
@@ -87,13 +94,20 @@ namespace WebApiProducto.Controllers.V2
         /// </remarks>         
         /// <response code="200">OK. Devuelve el mimso producto agregado.</response>        
         /// <response code="500">InternalServerError. Error interno del servidor.</response>
-        [HttpPost("createNewProduct")]
+        [HttpPost("CreateNewProductMessage")]
         [ProducesResponseType(typeof(Producto), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status500InternalServerError)]
-        public async Task<Producto> CreateNewProductAsync(Producto producto)
+        public async Task<IResult> CreateNewProductMessageAsync(Producto producto)
         {
-            await Task.Delay(1000);
-            throw new NotImplementedException();
+             await iServicesBus.SendMessageAsync(producto.Title, producto.Price);
+             return Results.Ok();
+            
+        }
+        [HttpGet("GetProductMesagge")]
+        public async Task<IResult> GetProductMesaggeAsync()
+        {
+            await _subscriptionReceiver.ProcessMessagesAsync();
+            return Results.Ok("Mensaje leido correctamente");
         }
         /// <summary>Esta acción modifica un producto</summary>
         /// <remarks>

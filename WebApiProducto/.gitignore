@@ -17,7 +17,7 @@ TestResult.xml
 Version.cs
 Version.h
 Version.cpp
-
+*.vsidx
 # Compiled output
 /dist
 /tmp

@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/WebApiProducto/WebApiProducto.csproj",
+                "${workspaceFolder}/WebApiProducto.sln",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/WebApiProducto/WebApiProducto.csproj",
+                "${workspaceFolder}/WebApiProducto.sln",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -33,18 +33,9 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/WebApiProducto/WebApiProducto.csproj"
+                "${workspaceFolder}/WebApiProducto.sln"
             ],
             "problemMatcher": "$msCompile"
-        },
-        {
-            "type": "dotnet",
-            "task": "build",
-            "problemMatcher": [
-                "$msCompile"
-            ],
-            "group": "build",
-            "label": "dotnet: build"
         }
     ]
 }

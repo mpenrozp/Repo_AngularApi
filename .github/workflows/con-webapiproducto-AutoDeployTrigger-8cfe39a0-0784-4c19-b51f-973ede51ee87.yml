@@ -35,7 +35,7 @@ jobs:
         uses: azure/container-apps-deploy-action@v2
         with:
           appSourcePath: ${{ github.workspace }} 
-          registryUrl: Docker.io
+          registryUrl: docker.io
           registryUsername: ${{ secrets.CONWEBAPIPRODUCTO_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.CONWEBAPIPRODUCTO_REGISTRY_PASSWORD }}
           containerAppName: con-webapiproducto

@@ -33,7 +33,7 @@ jobs:
         docker build --platform linux --tag mpenrozp/webapiproducto:latest -f ./Dockerfile .
     - name: Publish website image
       run: |
-        docker push mpenrozp/webapiproducto:v3
+        docker push mpenrozp/webapiproducto:latest
     - name: Azure Login
       uses: azure/login@v1
       with:

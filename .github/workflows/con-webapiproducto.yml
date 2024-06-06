@@ -30,7 +30,7 @@ jobs:
         password: ${{ secrets.CONWEBAPIPRODUCTO_REGISTRY_PASSWORD }}
     - name: Build website image
       run: | 
-        docker build --platform linux --tag mpenrozp/webapiproducto:v3 -f ./Dockerfile .
+        docker build --platform linux --tag mpenrozp/webapiproducto:latest -f ./Dockerfile .
     - name: Publish website image
       run: |
         docker push mpenrozp/webapiproducto:v3
@@ -45,6 +45,11 @@ jobs:
       run: |
           az containerapp up \
             --name con-webapiproducto \
-            --image mpenrozp/webapiproducto:v3
+            --resource-group test-containers \
+            --environment 'managedEnvironment-testcontainers-9dae' \
+            --image mpenrozp/webapiproducto:latest \
+            --target-port 80 \
+            --ingress external \
+            --query properties.configuration.ingress.fqdn
 
 

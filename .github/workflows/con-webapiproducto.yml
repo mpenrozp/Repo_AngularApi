@@ -21,27 +21,32 @@ jobs:
       contents: read #Required when GH token is used to authenticate with private repo
 
     steps:
-      - name: Checkout to the branch
-        uses: actions/checkout@v2
-
-      - name: Azure Login
-        uses: azure/login@v1
-        with:
+    - name: Check out the repo
+      uses: actions/checkout@v3 
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.CONWEBAPIPRODUCTO_REGISTRY_USERNAME }}
+        password: ${{ secrets.CONWEBAPIPRODUCTO_REGISTRY_PASSWORD }}
+    - name: Build website image
+      run: | 
+        docker build --platform linux --tag mpenrozp/webapiproducto:v2 -f ./Dockerfile .
+    - name: Publish website image
+      run: |
+        docker push mpenrozp/webapiproducto:v2
+    - name: Azure Login
+      uses: azure/login@v1
+      with:
           client-id: ${{ secrets.CONWEBAPIPRODUCTO_AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.CONWEBAPIPRODUCTO_AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.CONWEBAPIPRODUCTO_AZURE_SUBSCRIPTION_ID }}
 
-      - name: Build and push container image to registry
-        uses: azure/container-apps-deploy-action@v2
-        with:
+    - name: Build and push container image to registry
+      uses: azure/container-apps-deploy-action@v2
+      with:
           appSourcePath: ${{ github.workspace }} 
-          registryUrl: index.docker.io
-          registryUsername: ${{ secrets.CONWEBAPIPRODUCTO_REGISTRY_USERNAME }}
-          registryPassword: ${{ secrets.CONWEBAPIPRODUCTO_REGISTRY_PASSWORD }}
           containerAppName: con-webapiproducto
           resourceGroup: test-containers
-          imageToBuild: Mpenrozp/con-webapiproducto:${{ github.sha }}
-          _buildArgumentsKey_: |
-            _buildArgumentsValues_
+          imageToBuild: mpenrozp/con-webapiproducto:v2
 
 

@@ -42,11 +42,9 @@ jobs:
           subscription-id: ${{ secrets.CONWEBAPIPRODUCTO_AZURE_SUBSCRIPTION_ID }}
 
     - name: Build and push container image to registry
-      uses: azure/container-apps-deploy-action@v2
-      with:
-          appSourcePath: ${{ github.workspace }} 
-          containerAppName: con-webapiproducto
-          resourceGroup: test-containers
-          imageToBuild: mpenrozp/con-webapiproducto:v2
+      run: |
+          az containerapp up \
+            --name con-webapiproducto \
+            --image mpenrozp/webapiproducto:v2
 
 

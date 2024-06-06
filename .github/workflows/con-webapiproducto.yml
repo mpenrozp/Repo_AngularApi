@@ -30,10 +30,10 @@ jobs:
         password: ${{ secrets.CONWEBAPIPRODUCTO_REGISTRY_PASSWORD }}
     - name: Build website image
       run: | 
-        docker build --platform linux --tag mpenrozp/webapiproducto:v2 -f ./Dockerfile .
+        docker build --platform linux --tag mpenrozp/webapiproducto:v3 -f ./Dockerfile .
     - name: Publish website image
       run: |
-        docker push mpenrozp/webapiproducto:v2
+        docker push mpenrozp/webapiproducto:v3
     - name: Azure Login
       uses: azure/login@v1
       with:
@@ -45,6 +45,6 @@ jobs:
       run: |
           az containerapp up \
             --name con-webapiproducto \
-            --image mpenrozp/webapiproducto:v2
+            --image mpenrozp/webapiproducto:v3
 
 

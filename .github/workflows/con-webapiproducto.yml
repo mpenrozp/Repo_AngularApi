@@ -47,7 +47,7 @@ jobs:
             --name con-webapiproducto \
             --resource-group test-containers \
             --environment 'managedEnvironment-testcontainers-9dae' \
-            --image mpenrozp/webapiproducto:latest \
+            --image registry.hub.docker.com/mpenrozp/webapiproducto:latest \
             --target-port 80 \
             --ingress external \
             --query properties.configuration.ingress.fqdn

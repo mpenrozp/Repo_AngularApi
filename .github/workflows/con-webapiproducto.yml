@@ -41,5 +41,7 @@ jobs:
           subscription-id: ${{ secrets.CONWEBAPIPRODUCTO_AZURE_SUBSCRIPTION_ID }}
     - name: Deploy NET container App
       run: |
-          az containerapp up --name "con-webapiproducto" --resource-group test-containers --environment managedEnvironment-testcontainers-9dae --image mpenrozp/webapiproducto:latest
+          az containerapp up --name "con-webapiproducto" --resource-group test-containers --environment managedEnvironment-testcontainers-9dae --image mpenrozp/webapiproducto:latest \
+          --target-port 8000 \
+          --ingress external
 

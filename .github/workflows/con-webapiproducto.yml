@@ -34,22 +34,11 @@ jobs:
     - name: Publish website image
       run: |
         docker push mpenrozp/webapiproducto:latest
-    - name: Azure Login
-      uses: azure/login@v1
+    - name: App service auth
+      uses: azure/webapps-deploy@v2
       with:
-          client-id: ${{ secrets.CONWEBAPIPRODUCTO_AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.CONWEBAPIPRODUCTO_AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.CONWEBAPIPRODUCTO_AZURE_SUBSCRIPTION_ID }}
-
-    - name: Build and push container image to registry
-      run: |
-          az containerapp up \
-            --name con-webapiproducto \
-            --resource-group test-containers \
-            --environment 'managedEnvironment-testcontainers-9dae' \
-            --image registry.hub.docker.com/mpenrozp/webapiproducto:latest \
-            --target-port 80 \
-            --ingress external \
-            --query properties.configuration.ingress.fqdn
+        app-name: 'WebApiProductoTest'
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        images: 'mpenrozp/webapiproducto:latest'
 
 

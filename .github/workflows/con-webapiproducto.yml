@@ -34,9 +34,9 @@ jobs:
     - name: Azure Login
       uses: Azure/login@v1.4.6
       with:
-          client-id: ${{ secrets.CONWEBAPIPRODUCTO_AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.CONWEBAPIPRODUCTO_AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.CONWEBAPIPRODUCTO_AZURE_SUBSCRIPTION_ID }}
+          client-id: ${{ secrets.CONMSWEBAPIPRODUCTO_AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.CONMSWEBAPIPRODUCTO_AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.CONMSWEBAPIPRODUCTO_AZURE_SUBSCRIPTION_ID }}
     - name: Deploy NET container App
       run: |
           az containerapp up --name "con-ms-webapiproducto" --resource-group test-microservices --environment managedEnvironment-testmicroservic-a77c --image mpenrozp/webapiproducto:latest

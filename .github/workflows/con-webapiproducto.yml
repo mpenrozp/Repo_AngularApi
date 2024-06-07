@@ -39,4 +39,4 @@ jobs:
           subscription-id: ${{ secrets.CONWEBAPIPRODUCTO_AZURE_SUBSCRIPTION_ID }}
     - name: Deploy NET container App
       run: |
-          az containerapp up --name "con-webapiproduct" --resource-group test-containers --environment managedEnvironment-testcontainers-9dae --image mpenrozp/webapiproducto2:latest
+          az containerapp up --name "con-ms-webapiproducto" --resource-group test-microservices --environment managedEnvironment-testmicroservic-a77c --image mpenrozp/webapiproducto:latest

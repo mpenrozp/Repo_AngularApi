@@ -38,7 +38,7 @@ jobs:
       uses: azure/webapps-deploy@v2
       with:
         app-name: 'WebApiProductoTest'
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        publish-profile: ${{secrets.AZUREAPPSERVICE_PUBLISHPROFILE_FC6439BB0AC04F479E7853ED9D35936A }}
         images: 'mpenrozp/webapiproducto:latest'
 
 

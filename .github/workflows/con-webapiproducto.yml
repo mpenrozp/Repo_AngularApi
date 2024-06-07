@@ -29,10 +29,10 @@ jobs:
         password: ${{ secrets.CONWEBAPIPRODUCTO_REGISTRY_PASSWORD }}
     - name: Build website image
       run: | 
-        docker build --platform linux --tag mpenrozp/webapiproducto:latest -f ./Dockerfile .
+        docker build --platform linux --tag mpenrozp/webapiproducto2:latest -f ./Dockerfile .
     - name: Publish website image
       run: |
-        docker push mpenrozp/webapiproducto:latest
+        docker push mpenrozp/webapiproducto2:latest
     - name: Azure Login
       uses: Azure/login@v1.4.6
       with:
@@ -41,5 +41,5 @@ jobs:
           subscription-id: ${{ secrets.CONWEBAPIPRODUCTO_AZURE_SUBSCRIPTION_ID }}
     - name: Deploy NET container App
       run: |
-          az containerapp up --name "con-webapiproducto" --resource-group test-containers --environment managedEnvironment-testcontainers-9dae --image mpenrozp/webapiproducto:latest
+          az containerapp up --name "con-webapiproducto" --resource-group test-containers --environment managedEnvironment-testcontainers-9dae --image mpenrozp/webapiproducto2:latest
 

@@ -3,7 +3,7 @@ WORKDIR /src
 COPY WebApiProducto.csproj .
 RUN dotnet restore
 COPY . .
-EXPOSE 80
+EXPOSE 8000
 RUN dotnet build "WebApiProducto.csproj" -c Release -o /app/build
 
 RUN dotnet publish -c release -o /app

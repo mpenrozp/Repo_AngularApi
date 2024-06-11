@@ -39,4 +39,4 @@ jobs:
           subscription-id: ${{ secrets.CONMSWEBAPIPRODUCTO_AZURE_SUBSCRIPTION_ID }}
     - name: Deploy NET container App
       run: |
-          az containerapp up --name "con-ms-webapiproducto" --resource-group test-microservices --environment managedEnvironment-testmicroservic-a77c --image mpenrozp/webapiproducto:latest
+          az containerapp up --name "con-ms-webapiproduct" --resource-group test-microservices --environment managedEnvironment-testmicroservic-a77c --image mpenrozp/webapiproducto:latest --user-assigned "9774e9d4-cd9d-40a3-977c-fece07b7a0dd" --secrets "queue-connection-string=keyvaultref:https://key-value-ms.vault.azure.net/secrets/secreto1/e50e6a94eaf74d1294fd37e067d088de,identityref:9774e9d4-cd9d-40a3-977c-fece07b7a0dd"

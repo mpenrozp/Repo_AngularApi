@@ -38,7 +38,7 @@ jobs:
           registryUsername: ${{ secrets.CONMSWEBAPIPRODUCT_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.CONMSWEBAPIPRODUCT_REGISTRY_PASSWORD }}
           containerAppName: con-ms-webapiproduct
-          resourceGroup: test-group
+          resourceGroup: test-microservices
           imageToBuild: mpenrozp/con-ms-webapiproduct:${{ github.sha }}
           _buildArgumentsKey_: |
             _buildArgumentsValues_

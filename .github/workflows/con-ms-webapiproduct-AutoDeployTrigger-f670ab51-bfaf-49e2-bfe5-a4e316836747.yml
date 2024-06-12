@@ -8,7 +8,6 @@ on:
       [ main ]
     paths:
     - '**'
-    - '.github/workflows/con-ms-webapiproduct-AutoDeployTrigger-f670ab51-bfaf-49e2-bfe5-a4e316836747.yml'
 
   # Allow manual trigger 
   workflow_dispatch:      

@@ -40,8 +40,7 @@ jobs:
           subscription-id: ${{ secrets.CONMSWEBAPIPRODUCT_AZURE_SUBSCRIPTION_ID }}
     - name: Deploy NET container App
       run: |
-          az containerapp up --name "con-ms-webapiproduct" --resource-group test-microservices --environment managedEnvironment-testgroup-a729 --image mpenrozp/con-ms-webapiproduct:${{ github.sha }} \
-                             --min-replicas 4 --max-replicas 8
+          az containerapp update -n "con-ms-webapiproduct" -group test-microservices --environment managedEnvironment-testgroup-a729 --image mpenrozp/con-ms-webapiproduct:${{ github.sha }} --min-replicas 0 --max-replicas 3
 
 
 

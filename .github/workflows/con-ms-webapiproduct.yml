@@ -40,6 +40,8 @@ jobs:
           resourceGroup: test-microservices
           imageToBuild: mpenrozp/con-ms-webapiproduct:${{ github.sha }}
           _buildArgumentsKey_: |
-            _buildArgumentsValues_
+            _buildArgumentsValues_         
+          maxReplicas: 20
+          minReplicas: 1
 
 

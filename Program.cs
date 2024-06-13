@@ -14,6 +14,7 @@ using WebApiProducto.Data;
 using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using System.Text.Json.Serialization;
+using Azure.Identity;
 
 
 
@@ -105,6 +106,12 @@ var apiVersionDescriptionProvider =
         }
     });
 
+//}
+//if (app.Environment.IsProduction())
+//{
+   builder.Configuration.AddAzureKeyVault(
+   new Uri(builder.Configuration["Secrets:UriKeyVault"]),
+   new DefaultAzureCredential());
 //}
 
 app.UseHttpsRedirection();

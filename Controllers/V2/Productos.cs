@@ -27,14 +27,15 @@ namespace WebApiProducto.Controllers.V2
         private readonly IProductos iproductos;
         private readonly ILogger<Productos> _logger;
         private readonly IServiceBus iServicesBus;
+        private readonly IConfiguration _configuration;
 
-
-        public Productos(IProductos iproductos_, ILogger<Productos> logger, IServiceBus _iServicesBus)
+        public Productos(IProductos iproductos_, ILogger<Productos> logger, IServiceBus _iServicesBus, IConfiguration configuration)
         {
 
             this.iproductos = iproductos_;
             this._logger = logger;
             this.iServicesBus = _iServicesBus;
+            this._configuration = configuration;
         }
         // [ApiExplorerSettings(IgnoreApi = true)]   
         /// <summary>Esta acción devuelve todos los productos</summary>
@@ -129,6 +130,13 @@ namespace WebApiProducto.Controllers.V2
         {
             await Task.Delay(1000);
             throw new NotImplementedException();
+        }
+        [HttpGet("GetSecreto")]
+        public async Task<IResult> GetSecreto(string nombre)
+        {
+            await Task.Delay(1000);
+            return Results.Ok(_configuration[nombre]);
+
         }
 
     }

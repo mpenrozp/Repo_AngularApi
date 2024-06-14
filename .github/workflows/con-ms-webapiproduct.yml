@@ -40,4 +40,5 @@ jobs:
     - name: Deploy NET container App
       run: |
           az containerapp update -n "con-ms-webapiproduct" -g test-microservices --image mpenrozp/con-ms-webapiproduct:${{ env.tag }} --min-replicas 1 --max-replicas 4 --set-env-vars client-id=secretref:clientid
+          
 

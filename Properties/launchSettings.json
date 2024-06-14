@@ -17,7 +17,7 @@
       "applicationUrl": "http://localhost:5046",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "AZURE_CLIENT_ID": "451176cb-fe27-45ac-a81a-269540f6b2fb"
+        "client-id": "451176cb-fe27-45ac-a81a-269540f6b2fb"
       }
     },
     "https": {

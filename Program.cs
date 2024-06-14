@@ -109,9 +109,9 @@ var apiVersionDescriptionProvider =
 //}
 //if (app.Environment.IsProduction())
 //{
-   //builder.Configuration.AddAzureKeyVault(
-   //new Uri(builder.Configuration["Secrets:UriKeyVault"]),
-   //new DefaultAzureCredential());
+   builder.Configuration.AddAzureKeyVault(
+   new Uri(builder.Configuration["Secrets:UriKeyVault"]),
+   new DefaultAzureCredential());
 //}
 
 app.UseHttpsRedirection();

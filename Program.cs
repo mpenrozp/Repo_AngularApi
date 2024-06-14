@@ -115,7 +115,7 @@ var apiVersionDescriptionProvider =
    new DefaultAzureCredential(new DefaultAzureCredentialOptions {  ManagedIdentityClientId = builder.Configuration["Secrets:AZURE_CLIENT_ID"] }),
    new AzureKeyVaultConfigurationOptions()
    {
-       ReloadInterval = TimeSpan.FromSeconds(int.Parse(builder.Configuration["Secrets:ReloadInterval"]))
+       //ReloadInterval = TimeSpan.FromSeconds(int.Parse(builder.Configuration["Secrets:ReloadInterval"]))
    });
 //}
 

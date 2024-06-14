@@ -15,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using System.Text.Json.Serialization;
 using Azure.Identity;
+using Azure.Extensions.AspNetCore.Configuration.Secrets;
 
 
 
@@ -111,7 +112,11 @@ var apiVersionDescriptionProvider =
 //{
    builder.Configuration.AddAzureKeyVault(
    new Uri(builder.Configuration["Secrets:UriKeyVault"]),
-   new DefaultAzureCredential());
+   new DefaultAzureCredential(new DefaultAzureCredentialOptions {  ManagedIdentityClientId = builder.Configuration["Secrets:AZURE_CLIENT_ID"] }),
+   new AzureKeyVaultConfigurationOptions()
+   {
+       ReloadInterval = TimeSpan.FromSeconds(int.Parse(builder.Configuration["Secrets:ReloadInterval"]))
+   });
 //}
 
 app.UseHttpsRedirection();

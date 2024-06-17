@@ -1,7 +1,7 @@
 name: Trigger auto deployment for con-webapiproduct
 # When this action will be executed
 on:
-  # Automatically trigger it when detected changes in repo
+  # Automatically trigger it when detected changes in repo 
   push:
     branches: 
       [ main ]

@@ -30,7 +30,7 @@ jobs:
         docker build --platform linux --tag mpenrozp/con-ms-webapiproducto:${{ env.tag }} -f ./Dockerfile .
     - name: Publish website image
       run: |
-        docker push mpenrozp/con-ms-webapiproduct:${{ env.tag }}
+        docker push mpenrozp/con-ms-webapiproducto:${{ env.tag }}
     - name: Azure Login
       uses: Azure/login@v1.4.6
       with:

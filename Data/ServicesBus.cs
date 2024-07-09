@@ -51,7 +51,7 @@ namespace WebApiProducto.Data
             //TODO: Replace the "<NAMESPACE-NAME>" and "<QUEUE-NAME>" placeholders.
             client = new ServiceBusClient(
                 _configuration["ServiceBus:NameSpaceQueue"],
-                new DefaultAzureCredential(new DefaultAzureCredentialOptions { ManagedIdentityClientId = Environment.GetEnvironmentVariable("client-id-queue") }),
+                new DefaultAzureCredential(new DefaultAzureCredentialOptions { ManagedIdentityClientId = Environment.GetEnvironmentVariable("client-id") }),
                 clientOptions);
             sender = client.CreateSender(_configuration["ServiceBus:QueueName"]);
             var messageBody = ($"Title: {title}, Precio: {precio}");

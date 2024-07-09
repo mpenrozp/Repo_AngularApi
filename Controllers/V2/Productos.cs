@@ -103,6 +103,21 @@ namespace WebApiProducto.Controllers.V2
              return Results.Ok();
             
         }
+        /// <summary>Esta acción agrega un nuevo producto</summary>
+        /// <remarks>
+        /// Devuelve el mismo producto agregado
+        /// </remarks>         
+        /// <response code="200">OK. Devuelve el mimso producto agregado.</response>        
+        /// <response code="500">InternalServerError. Error interno del servidor.</response>
+        [HttpPost("CreateNewProductMessageCredentials")]
+        [ProducesResponseType(typeof(Producto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status500InternalServerError)]
+        public async Task<IResult> CreateNewProductMessageAsyncCredentials(Producto producto)
+        {
+            await iServicesBus.SendMessageAsyncDefaultCreden(producto.Title, producto.Price);
+            return Results.Ok();
+
+        }
         /// <summary>Esta acción modifica un producto</summary>
         /// <remarks>
         /// Devuelve el mismo producto modificado

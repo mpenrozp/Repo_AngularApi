@@ -1,4 +1,4 @@
-name: Trigger auto deployment for con-webapiproduct
+name: Trigger auto deployment for con-webapiproducto
 # When this action will be executed
 on:
   # Automatically trigger it when detected changes in repo 

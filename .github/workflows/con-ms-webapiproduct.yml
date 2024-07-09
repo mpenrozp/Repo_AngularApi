@@ -39,6 +39,6 @@ jobs:
           subscription-id: ${{ secrets.CONMSWEBAPIPRODUCT_AZURE_SUBSCRIPTION_ID }}
     - name: Deploy NET container App
       run: |
-          az containerapp update -n "con-ms-webapiproducto" -g test-ms --image mpenrozp/con-ms-webapiproducto:${{ env.tag }} --min-replicas 1 --max-replicas 4 --set-env-vars client-id=secretref:clientid client-id-queue=secretref:clientidwritequeue
+          az containerapp update -n "con-ms-webapiproducto" -g test-ms --image mpenrozp/con-ms-webapiproducto:${{ env.tag }} --min-replicas 1 --max-replicas 4 --set-env-vars client-id=secretref:clientid
           
 

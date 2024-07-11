@@ -33,12 +33,13 @@ jobs:
       - name: Build and push container image to registry
         uses: azure/container-apps-deploy-action@v2
         with:
-          yamlConfigPath: Config.yml
+          
           appSourcePath: ${{ github.workspace }} 
           registryUrl: docker.io
           registryUsername: ${{ secrets.CONMSWEBAPIPRODUCT_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.CONMSWEBAPIPRODUCT_REGISTRY_PASSWORD }}
           containerAppName: con-ms-webapiproducto
           resourceGroup: test-ms
+          imageToBuild: mpenrozp/con-ms-webapiproducto:${{ github.sha }}
           _buildArgumentsKey_: |
             _buildArgumentsValues_

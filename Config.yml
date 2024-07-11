@@ -7,5 +7,5 @@ properties:
       targetPort: 80
   template:
     containers:
-      - image: mcr.microsoft.com/azuredocs/containerapps-helloworld:latest
+      - image: mpenrozp/con-ms-webapiproducto:${{ github.sha }}
         name: mysampleimagecontainer

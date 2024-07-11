@@ -1,0 +1,11 @@
+properties:
+  managedEnvironmentId: /subscriptions/4f63ba25-8e7c-42db-b996-c467a856f113/resourceGroups/test-ms/providers/Microsoft.App/managedEnvironments/managedEnvironment-testms-82fd
+  configuration:
+    ingress:
+      external: true
+      allowInsecure: false
+      targetPort: 80
+  template:
+    containers:
+      - image: mcr.microsoft.com/azuredocs/containerapps-helloworld:latest
+        name: mysampleimagecontainer

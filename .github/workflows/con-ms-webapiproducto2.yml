@@ -38,5 +38,7 @@ jobs:
           registryUrl: docker.io
           registryUsername: ${{ secrets.CONMSWEBAPIPRODUCT_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.CONMSWEBAPIPRODUCT_REGISTRY_PASSWORD }}
+          containerAppName: con-ms-webapiproducto
+          resourceGroup: test-ms
           _buildArgumentsKey_: |
             _buildArgumentsValues_

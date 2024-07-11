@@ -8,4 +8,4 @@ properties:
   template:
     containers:
       - image: mpenrozp/con-ms-webapiproducto:${{ github.sha }}
-        name: mysampleimagecontainer
+        name: con-ms-webapiproducto

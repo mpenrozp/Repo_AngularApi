@@ -39,8 +39,7 @@ jobs:
           registryUsername: ${{ secrets.CONMSWEBAPIPRODUCTO_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.CONMSWEBAPIPRODUCTO_REGISTRY_PASSWORD }}
           containerAppName: con-ms-webapiproducto
-          resourceGroup: test-ms
-          imageToBuild: mpenrozp/con-ms-webapiproducto:${{ github.sha }}
+          yamlConfigPath: Nuevo archivo.yml
           _buildArgumentsKey_: |
             _buildArgumentsValues_
 

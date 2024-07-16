@@ -40,4 +40,6 @@ jobs:
           registryPassword: ${{ secrets.CONMSWEBAPIPRODUCT_REGISTRY_PASSWORD }}
           resourceGroup: test-ms
           containerAppName: con-ms-webapiproducto
-          yamlConfigPath:  Config.yml
+          imageToBuild: mpenrozp/con-ms-webapiproducto:${{ github.sha }}
+          _buildArgumentsKey_: |
+            _buildArgumentsValues_

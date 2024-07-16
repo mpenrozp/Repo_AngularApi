@@ -39,4 +39,5 @@ jobs:
           registryUsername: ${{ secrets.CONMSWEBAPIPRODUCT_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.CONMSWEBAPIPRODUCT_REGISTRY_PASSWORD }}
           resourceGroup: test-ms
+          containerAppName: con-ms-webapiproducto
           yamlConfigPath:  Config.yml

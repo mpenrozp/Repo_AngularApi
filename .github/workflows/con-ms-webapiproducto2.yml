@@ -39,3 +39,4 @@ jobs:
           registryUsername: ${{ secrets.CONMSWEBAPIPRODUCT_REGISTRY_USERNAME }}
           registryPassword: ${{ secrets.CONMSWEBAPIPRODUCT_REGISTRY_PASSWORD }}
           resourceGroup: test-ms
+          yamlConfigPath:  Config.yml

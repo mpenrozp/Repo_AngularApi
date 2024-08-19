@@ -110,13 +110,13 @@ var apiVersionDescriptionProvider =
 //}
 //if (app.Environment.IsProduction())
 //{
-   builder.Configuration.AddAzureKeyVault(
-   new Uri(builder.Configuration["Secrets:UriKeyVault"]),
-   new DefaultAzureCredential(new DefaultAzureCredentialOptions {  ManagedIdentityClientId = Environment.GetEnvironmentVariable("client-id") }),
-   new AzureKeyVaultConfigurationOptions()
-   {
-       ReloadInterval = TimeSpan.FromSeconds(int.Parse(builder.Configuration["Secrets:ReloadInterval"]))
-   });
+   //builder.Configuration.AddAzureKeyVault(
+   //new Uri(builder.Configuration["Secrets:UriKeyVault"]),
+   //new DefaultAzureCredential(new DefaultAzureCredentialOptions {  ManagedIdentityClientId = Environment.GetEnvironmentVariable("client-id") }),
+   //new AzureKeyVaultConfigurationOptions()
+   //{
+   //    ReloadInterval = TimeSpan.FromSeconds(int.Parse(builder.Configuration["Secrets:ReloadInterval"]))
+   //});
 //}
 
 app.UseHttpsRedirection();

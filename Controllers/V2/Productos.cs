@@ -11,6 +11,7 @@ using WebApiProducto.Examples;
 using WebApiProducto.Models;
 using WebApiProducto.Services;
 using WebApiProducto.Data;
+using System.ComponentModel.DataAnnotations;
 
 
 
@@ -155,7 +156,7 @@ namespace WebApiProducto.Controllers.V2
         }
         [HttpPut("UpdateMail")]
         [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status500InternalServerError)]
-        public async Task<IResult> UpdateMailAsync(UpdateMailRequest updateMailRequest)
+        public async Task<IResult> UpdateMailAsync([Required]UpdateMailRequest updateMailRequest)
         {
             await Task.Delay(1000);
             return Results.Ok("Mail modificado correctamente");

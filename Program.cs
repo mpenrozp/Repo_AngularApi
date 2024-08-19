@@ -16,6 +16,7 @@ using AutoMapper;
 using System.Text.Json.Serialization;
 using Azure.Identity;
 using Azure.Extensions.AspNetCore.Configuration.Secrets;
+using WebApiProducto.Models;
 
 
 
@@ -110,17 +111,16 @@ var apiVersionDescriptionProvider =
 //}
 //if (app.Environment.IsProduction())
 //{
-   //builder.Configuration.AddAzureKeyVault(
-   //new Uri(builder.Configuration["Secrets:UriKeyVault"]),
-   //new DefaultAzureCredential(new DefaultAzureCredentialOptions {  ManagedIdentityClientId = Environment.GetEnvironmentVariable("client-id") }),
-   //new AzureKeyVaultConfigurationOptions()
-   //{
-   //    ReloadInterval = TimeSpan.FromSeconds(int.Parse(builder.Configuration["Secrets:ReloadInterval"]))
-   //});
+//builder.Configuration.AddAzureKeyVault(
+//new Uri(builder.Configuration["Secrets:UriKeyVault"]),
+//new DefaultAzureCredential(new DefaultAzureCredentialOptions {  ManagedIdentityClientId = Environment.GetEnvironmentVariable("client-id") }),
+//new AzureKeyVaultConfigurationOptions()
+//{
+//    ReloadInterval = TimeSpan.FromSeconds(int.Parse(builder.Configuration["Secrets:ReloadInterval"]))
+//});
 //}
-
+Log.Information($" Prueba...");
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
 
 app.MapControllers();

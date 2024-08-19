@@ -2,7 +2,7 @@
 {
     public class UpdateMailRequest
     {
-        public int Identificador { get; set; }
+        public string Identificador { get; set; } = string.Empty;
         public string Mail { get; set; } = string.Empty;
 
     }

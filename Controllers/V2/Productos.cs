@@ -12,6 +12,7 @@ using WebApiProducto.Models;
 using WebApiProducto.Services;
 using WebApiProducto.Data;
 using System.ComponentModel.DataAnnotations;
+using Serilog;
 
 
 
@@ -159,6 +160,7 @@ namespace WebApiProducto.Controllers.V2
         public async Task<IResult> UpdateMailAsync([Required]UpdateMailRequest updateMailRequest)
         {
             await Task.Delay(1000);
+            _logger.LogInformation($" Identificador: { updateMailRequest.Identificador }, Mail: { updateMailRequest.Mail} ");
             return Results.Ok("Mail modificado correctamente!");
         }
 

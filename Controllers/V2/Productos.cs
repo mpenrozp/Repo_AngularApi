@@ -159,7 +159,7 @@ namespace WebApiProducto.Controllers.V2
         public async Task<IResult> UpdateMailAsync([Required]UpdateMailRequest updateMailRequest)
         {
             await Task.Delay(1000);
-            return Results.Ok("Mail modificado correctamente");
+            return Results.Ok("Mail modificado correctamente!");
         }
 
     }

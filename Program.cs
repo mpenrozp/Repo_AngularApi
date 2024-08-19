@@ -119,10 +119,10 @@ var apiVersionDescriptionProvider =
 //    ReloadInterval = TimeSpan.FromSeconds(int.Parse(builder.Configuration["Secrets:ReloadInterval"]))
 //});
 //}
-Log.Information($" Prueba...");
-app.UseHttpsRedirection();
-app.UseAuthorization();
 
+app.UseHttpsRedirection();
+app.UseAuthentication();
+app.UseAuthorization();
 app.MapControllers();
 
 app.UseMiddleware<RequestResponseLoggingMiddleware>();

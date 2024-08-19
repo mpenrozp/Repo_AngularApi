@@ -13,6 +13,7 @@ using WebApiProducto.Services;
 using WebApiProducto.Data;
 using System.ComponentModel.DataAnnotations;
 using Serilog;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 
 
 
@@ -22,7 +23,7 @@ namespace WebApiProducto.Controllers.V2
     [ApiController]
     [ApiVersion("2.0")]
     [Route("api/v{version:apiVersion}/[controller]")]
-   // [Authorize]
+    [Authorize]
     public class Productos : ControllerBase
     {
 
@@ -157,10 +158,11 @@ namespace WebApiProducto.Controllers.V2
         }
         [HttpPut("UpdateMail")]
         [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status500InternalServerError)]
-        public async Task<IResult> UpdateMailAsync([Required]UpdateMailRequest updateMailRequest)
+        public async Task<IResult> UpdateMailAsync([FromHeader(Name = "Authorization")] string auth ,
+            [Required]UpdateMailRequest updateMailRequest)
         {
             await Task.Delay(1000);
-            _logger.LogInformation($" Identificador: { updateMailRequest.Identificador }, Mail: { updateMailRequest.Mail} ");
+            _logger.LogInformation($" Identificador: { updateMailRequest.Identificador }, Mail: { updateMailRequest.Mail} , Token: {auth}");
             return Results.Ok("Mail modificado correctamente!");
         }
 

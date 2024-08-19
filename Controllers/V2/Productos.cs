@@ -153,6 +153,13 @@ namespace WebApiProducto.Controllers.V2
             return Results.Ok(_configuration[nombre]);
 
         }
+        [HttpPut("UpdateMail")]
+        [ProducesResponseType(typeof(ResponseDetailsError), StatusCodes.Status500InternalServerError)]
+        public async Task<IResult> UpdateMailAsync(UpdateMailRequest updateMailRequest)
+        {
+            await Task.Delay(1000);
+            return Results.Ok("Mail modificado correctamente");
+        }
 
     }
 }

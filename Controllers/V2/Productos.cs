@@ -40,6 +40,20 @@ namespace WebApiProducto.Controllers.V2
             this.iServicesBus = _iServicesBus;
             this._configuration = configuration;
         }
+        [HttpGet("AllProductos")]
+        public async Task<IActionResult> GetProductos()
+        {
+            List<Producto> lsProductos;
+            //Producto oProd = new Producto(){ Id= 1, Price = 2000, Title = "Titulo", Images = new string[100] };
+            _logger.LogInformation("consultando productos...");
+            Task<List<Producto>> lsProducto = iproductos.GetProductosAsync();
+            _logger.LogInformation("ejecutando metodos sincronos...");
+
+            lsProductos = await lsProducto;
+
+            _logger.LogInformation("terminó la consulta de productos");
+            return Ok(lsProductos);
+        }
         // [ApiExplorerSettings(IgnoreApi = true)]   
         /// <summary>Esta acción devuelve todos los productos</summary>
         /// <remarks>
